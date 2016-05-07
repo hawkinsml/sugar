@@ -18,52 +18,91 @@ namespace Sugar
     {
         private int m_Opacity;
 
+        public bool AutoHide { get; set; }
+
         public ClipboardViewForm()
         {
+            AutoHide = false;
             m_Opacity = 100;
             InitializeComponent();
             Opacity = 0;
         }
 
+        public bool ToggleForm()
+        {
+            bool retVal = true;
+            if (Visible && Opacity > 0)
+            {
+                HideForm();
+            }
+            else
+            {
+                retVal = false;
+                ShowForm();
+            }
+            return retVal;
+        }
+
         public void ShowForm()
         {
-            setDlgPosition();
+          //  setDlgPosition();
 
-            
+
+            UpdateDisplay();
+            WindowState = FormWindowState.Normal;
+            Visible = true;
+            TopMost = true;
+            TopLevel = true;
+            FadeUpTo(m_Opacity);
+
+            if (AutoHide)
+            {
+                timer.Start();
+            }
+        }
+
+        public void UpdateDisplay()
+        {
+            this.BackColor = Color.White;
             textLabel.Visible = false;
             pictureBox.Visible = false;
 
             if (Clipboard.ContainsImage())
             {
-                Image clipboardImage = Clipboard.GetImage();
-                Size imageSize = clipboardImage.Size;
-
-                clipboardImage = ResizeImage(clipboardImage, 200, 200);
-
-                
-                this.Size = new Size(200, 200);
-                setDlgPosition();
-                string imagePath = Path.GetTempFileName();
-                imagePath = Path.ChangeExtension(imagePath, ".bmp");
-                clipboardImage.Save(imagePath);
-                pictureBox.ImageLocation = imagePath;
-                pictureBox.Visible = true;
+                DisplayImage();
             }
-            else if ( Clipboard.ContainsText() )
+            else if (Clipboard.ContainsText())
             {
-                this.Size = new Size(200, 200);
-                textLabel.Text = Clipboard.GetText();
-                textLabel.Visible = true;
+                DisplayText();
             }
+            else
+            {
+                this.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            }
+        }
+
+        private void DisplayText()
+        {
+           // this.Size = new Size(200, 200);
+            textLabel.Text = Clipboard.GetText();
+            textLabel.Visible = true;
+        }
+
+        private void DisplayImage()
+        {
+            Image clipboardImage = Clipboard.GetImage();
+            Size imageSize = clipboardImage.Size;
+
+            clipboardImage = ResizeImage(clipboardImage, this.Size.Width, this.Size.Height);
 
 
-            WindowState = FormWindowState.Normal;
-            
-            Visible = true;
-            TopMost = true;
-            TopLevel = true;
-            FadeUpTo(m_Opacity);
-            timer.Start();
+            //this.Size = new Size(200, 200);
+            //setDlgPosition();
+            string imagePath = Path.GetTempFileName();
+            imagePath = Path.ChangeExtension(imagePath, ".bmp");
+            clipboardImage.Save(imagePath);
+            pictureBox.ImageLocation = imagePath;
+            pictureBox.Visible = true;
         }
 
         public static Image resizeImage(Image imgToResize, Size size)

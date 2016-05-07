@@ -17,30 +17,51 @@ namespace Sugar.Components.Commands
     {
         static public void Init()
         {
-            CommandManager.AddCommandHandler(new MakeUpper());
+            CommandManager.AddCommandHandler(new Excel());
         }
 
         public string Name
         {
-            get { return "Commas"; }
+            get { return "Excel"; }
         }
 
-        public void Execute(string[] args)
+        public string[] ParamList
+        {
+            get { return new string[] { "File Name", "Password" }; } 
+        }
+
+        public string Help
+        {
+            get { return "<h3>Excel</h3><p>Creates an Excel file with the contents of the clipboard. Has two params.</p><dl><dt>File Name <span class='label label-default'>optional</span></dt><dd>File name to use when creating Excel file. If file name is not provide, a temp file name will be created.</dd><dt>Password <span class='label label-default'>optional</span></dt>  <dd>Encrypt file using this password.</dd></dl>"; }
+        }
+
+        public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
-            if (args.Length > 0 && !string.IsNullOrWhiteSpace(args[0]))
+            string password = "";
+            string fileName = Path.GetTempFileName();
+            if (args.Length > 1 && !string.IsNullOrWhiteSpace(args[1]))
             {
-                text = args[0];
+                string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                fileName = path + "\\" + args[1].Trim();
             }
+
+            if (args.Length > 2 && !string.IsNullOrWhiteSpace(args[2]))
+            {
+                password = args[2].Trim();
+            }
+
+            fileName = Path.ChangeExtension(fileName, ".xlsx");
 
             if (!string.IsNullOrWhiteSpace(text))
             {
-                BuildExcel(text);
+                BuildExcel(text, fileName, password);
             }
+            return true; // hide command window
         }
 
 
-        public void BuildExcel(string input)
+        public void BuildExcel(string input, string fileName, string password)
         {
             List<object[]> Data = new List<object[]>();
             List<string> lines = input.SplitLines();
@@ -67,6 +88,13 @@ namespace Sugar.Components.Commands
                 //Create the worksheet
                 ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Sheet1");
 
+                if( !string.IsNullOrWhiteSpace( password ) )
+                {
+                    pck.Encryption.Password = password;
+                    pck.Encryption.Algorithm = EncryptionAlgorithm.AES192;
+                    pck.Workbook.Protection.LockStructure = true;
+                }
+
                 //Load the datatable into the sheet
                 if (rowCount > 0)
                 {
@@ -86,8 +114,7 @@ namespace Sugar.Components.Commands
                     }
 
                 }
-                string fileName = Path.GetTempFileName();
-                fileName = Path.ChangeExtension(fileName, ".xlsx");
+                
 
                 if (SaveData(fileName, pck.GetAsByteArray()))
                 {

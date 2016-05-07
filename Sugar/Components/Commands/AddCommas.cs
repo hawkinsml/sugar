@@ -12,7 +12,7 @@ namespace Sugar.Components.Commands
     {
         static public void Init()
         {
-            CommandManager.AddCommandHandler(new MakeUpper());
+            CommandManager.AddCommandHandler(new AddCommas());
         }
 
         public string Name
@@ -20,14 +20,19 @@ namespace Sugar.Components.Commands
             get { return "Commas"; }
         }
 
-        public void Execute(string[] args)
+        public string[] ParamList
+        {
+            get { return null; }
+        }
+
+        public string Help
+        {
+            get { return "<h3>Commas</h3><p>Replace line feed and carriage return with a comma.</p>"; }
+        }
+
+        public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
-            if (args.Length > 0 && !string.IsNullOrWhiteSpace(args[0]))
-            {
-                text = args[0];
-            }
-
             if (!string.IsNullOrWhiteSpace(text))
             {
                 StringBuilder sb = new StringBuilder();
@@ -45,6 +50,8 @@ namespace Sugar.Components.Commands
 
                 Clipboard.SetText(sb.ToString(), TextDataFormat.Text);
             }
+
+            return true; // hide command window
         }
     }
 }

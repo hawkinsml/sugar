@@ -1,7 +1,6 @@
 C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\Debug\Sugar.exe.config
 C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\Debug\Sugar.exe
 C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\Debug\Sugar.pdb
-C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.csprojResolveAssemblyReference.cache
 C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.Properties.Resources.resources
 C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.csproj.GenerateResource.Cache
 C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.exe
@@ -38,3 +37,8 @@ C:\Users\MHawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Su
 C:\Users\MHawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.CommandForm.resources
 C:\Users\MHawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.Properties.Resources.resources
 C:\Users\MHawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.csproj.GenerateResource.Cache
+C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.csprojResolveAssemblyReference.cache
+C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.Views.SuggestedForm.resources
+C:\Users\MHawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.Views.SuggestedForm.resources
+C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\Debug\Newtonsoft.Json.dll
+C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\Debug\Newtonsoft.Json.xml

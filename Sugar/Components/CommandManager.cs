@@ -13,9 +13,9 @@ namespace Sugar.Components.Commands
     {
         static public List<ICommand> CommandHandlers = new List<ICommand>();
 
-        static private void InitTasks()
+        static public void InitCommands()
         {
-            foreach (Type taskHandler in Assembly.GetExecutingAssembly().GetTypes().Where(o => o.GetInterfaces().Contains(typeof(ITask))))
+            foreach (Type taskHandler in Assembly.GetExecutingAssembly().GetTypes().Where(o => o.GetInterfaces().Contains(typeof(ICommand))))
             {
                 MethodInfo method = taskHandler.GetMethod("Init", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
                 if (method != null)
@@ -30,36 +30,49 @@ namespace Sugar.Components.Commands
             CommandHandlers.Add(handler);
         }
 
-        static public bool ExecuteCommand(string commandName)
+        static public bool ExecuteCommand(string commandName, string param)
         {
-            bool retVal = false;
+            List<string> args = new List<string>();
+            args.Add(commandName);
+            args.Add(param);
+            return ExecuteCommand(commandName, args.ToArray());
+        }
+
+        static public bool ExecuteCommand(string commandName, string[] args)
+        {
+            bool foundCommand = false;
             foreach (var handler in CommandHandlers)
             {
                 if (string.Compare(handler.Name, commandName, true) == 0)
                 {
-                    handler.Execute(args);
-                    retVal = true;
+                    foundCommand = true;
+                    if (handler.Execute(args))
+                    {
+                        EventManager.Instance.FireHideEvent();
+                    }
                 }
             }
-            return retVal;
+            return foundCommand;
         }
 
-        static public List<string> Search(string text)
+        static public List<ICommand> Search(string text)
         {
-            List<string> retVal = new List<string>();
+            List<ICommand> retVal = new List<ICommand>();
 
             if (string.IsNullOrWhiteSpace(text) == false)
             {
                 foreach (var handler in CommandHandlers)
                 {
-                    if (handler.Name.StartsWith(text) == true)
+                    if (handler.Name.ToLower().StartsWith(text.ToLower()) == true)
                     {
-                        retVal.Add(handler.Name);
+                        retVal.Add(handler);
                     }
                 }
             }
             return retVal;
         }
+
+
 
         /*
 
@@ -67,19 +80,6 @@ namespace Sugar.Components.Commands
                     {
                         switch (CommandText.ToUpper())
                         {
-                            case "HIDE":
-                                this.Hide();
-                                handled = true;
-                                break;
-                            case "SHOW":
-                                ShowClipboard();
-                                CommandText = "";
-                                handled = false;
-                                break;
-                            case "CLEAR":
-                                ClipboardText = "";
-                                handled = true;
-                                break;
                             case "SHOW ON":
                                 showCLipboard = true;
                                 handled = true;
@@ -87,9 +87,6 @@ namespace Sugar.Components.Commands
                             case "SHOW OFF":
                                 showCLipboard = false;
                                 handled = true;
-                                break;
-                            default:
-                                handled = CommandManager.ProcessCommand(CommandText);
                                 break;
                         } 
  

@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Sugar Help</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="jumbotron text-center" style="background-color: #6f5499; color: white;" >
+        <h1>GET SH!T DONE with Sugar <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></h1>
+    </div>
+
+    <div class="container">
+
+
+<h3>Clear</h3>
+<p>Clears the contents of the clipbaord</p>
+
+<h3>Help</h3>
+<p>Display the help page that list all comamnds.</p>
+
+<h3>Dump</h3>
+<p>Displays a test file with the full details and contents of the clipboard.</p>
+
+
+<h3>Excel</h3>
+<p>Creates an Excel file with the contents of the clipboard. Has two params.</p> 
+<dl>
+  <dt>File Name <span class='label label-default'>optional</span></dt> 
+  <dd>File name to use when creating Excel file. If file name is not provide, a temp file name will be created.</dd>
+
+  <dt>Password <span class='label label-default'>optional</span></dt>
+  <dd>Encrypt file using this password.</dd>
+</dl>
+
+
+
+
+<p>Converts the contents of the clipboard from formatted text such as HTML or Rich Text into plain text.</p>
+
+<p>Saves the contents of the clipboard to a file</p><h4>Params:</h4><p>File Name [optional]</p>
+<p>Saves the contents of the clipboard as a temp file (.bmp for images and .txt for text) and opens the file with the defualt editor for the content type.</p>
+<p>Quits the application</p>
+
+<h3>Format</h3>
+<p>For each line on the clipboard, splits the line by spaces into a string array and passes these array into string.Format(Format String, words).</p>
+<dl>
+  <dt>Format String <span class='label label-primary'>required</span></dt> 
+  <dd>String passed as the Format text to string.Format().</dd>
+</dl>
+
+
+<p>Moves the command prompt on the screen.</p>
+<p>Display the contents of the clipboard</p>
+<p>Hides the command prompt. Same as pressing &lt;esc&gt; key</p>
+
+<p></p>
+<p>Converts the contents of the clipboard to all uppercase.</p>
+<p>Converts the contents of the clipboard to all lowercase.</p>
+<p>Trims spaces from the begining and ending of each line on the clipboard.</p>
+
+
+        <p>Hides the command prompt. Same as pressing <kbd>esc</kbd> key</p>
+
+    </div>
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+</body>
+</html>

@@ -32,8 +32,8 @@ namespace Sugar
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommandForm));
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.suggestedLabel = new System.Windows.Forms.Label();
             this.commandTextBox = new Sugar.Components.CommandTextBox();
-            this.tbShadow = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // notifyIcon
@@ -42,34 +42,34 @@ namespace Sugar
             this.notifyIcon.Visible = true;
             this.notifyIcon.DoubleClick += new System.EventHandler(this.notifyIcon_DoubleClick);
             // 
+            // suggestedLabel
+            // 
+            this.suggestedLabel.AutoSize = true;
+            this.suggestedLabel.BackColor = System.Drawing.Color.Transparent;
+            this.suggestedLabel.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.suggestedLabel.ForeColor = System.Drawing.Color.DarkGray;
+            this.suggestedLabel.Location = new System.Drawing.Point(18, 5);
+            this.suggestedLabel.Name = "suggestedLabel";
+            this.suggestedLabel.Size = new System.Drawing.Size(0, 23);
+            this.suggestedLabel.TabIndex = 3;
+            // 
             // commandTextBox
             // 
             this.commandTextBox.AcceptsReturn = true;
             this.commandTextBox.AcceptsTab = true;
-            this.commandTextBox.BackColor = System.Drawing.Color.Black;
+            this.commandTextBox.BackColor = System.Drawing.Color.White;
             this.commandTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.commandTextBox.Font = new System.Drawing.Font("Courier New", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.commandTextBox.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.commandTextBox.Location = new System.Drawing.Point(21, 24);
+            this.commandTextBox.Font = new System.Drawing.Font("Verdana", 32F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.commandTextBox.ForeColor = System.Drawing.Color.Black;
+            this.commandTextBox.Location = new System.Drawing.Point(18, 35);
+            this.commandTextBox.Margin = new System.Windows.Forms.Padding(0);
+            this.commandTextBox.MaximumSize = new System.Drawing.Size(418, 56);
+            this.commandTextBox.MinimumSize = new System.Drawing.Size(418, 56);
             this.commandTextBox.Name = "commandTextBox";
-            this.commandTextBox.Size = new System.Drawing.Size(272, 31);
+            this.commandTextBox.Size = new System.Drawing.Size(418, 56);
             this.commandTextBox.TabIndex = 2;
             this.commandTextBox.TextChanged += new System.EventHandler(this.commandTextBox_TextChanged);
             this.commandTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.commandTextBox_KeyDown);
-            // 
-            // tbShadow
-            // 
-            this.tbShadow.AcceptsReturn = true;
-            this.tbShadow.AcceptsTab = true;
-            this.tbShadow.BackColor = System.Drawing.Color.IndianRed;
-            this.tbShadow.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbShadow.Font = new System.Drawing.Font("Courier New", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbShadow.ForeColor = System.Drawing.Color.LightGray;
-            this.tbShadow.Location = new System.Drawing.Point(43, 49);
-            this.tbShadow.Name = "tbShadow";
-            this.tbShadow.ReadOnly = true;
-            this.tbShadow.Size = new System.Drawing.Size(272, 31);
-            this.tbShadow.TabIndex = 1;
             // 
             // CommandForm
             // 
@@ -78,10 +78,10 @@ namespace Sugar
             this.BackColor = System.Drawing.Color.HotPink;
             this.BackgroundImage = global::Sugar.Properties.Resources.commandwindow;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(327, 92);
+            this.ClientSize = new System.Drawing.Size(456, 100);
             this.ControlBox = false;
+            this.Controls.Add(this.suggestedLabel);
             this.Controls.Add(this.commandTextBox);
-            this.Controls.Add(this.tbShadow);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -102,8 +102,8 @@ namespace Sugar
         #endregion
 
         private System.Windows.Forms.NotifyIcon notifyIcon;
-        private System.Windows.Forms.TextBox tbShadow;
         private CommandTextBox commandTextBox;
+        private System.Windows.Forms.Label suggestedLabel;
     }
 }
 

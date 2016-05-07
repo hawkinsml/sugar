@@ -10,9 +10,12 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CefSharp;
 using CSScriptLibrary;
+using Sugar.Components;
 using Sugar.Components.Commands;
 using Sugar.Helpers;
+using Sugar.Views;
 
 namespace Sugar
 {
@@ -20,9 +23,13 @@ namespace Sugar
     {
         ClipboardViewForm clipboardPreview = new ClipboardViewForm();
         CommandManager cmdHandler = new CommandManager();
+        WebForm webForm = new WebForm();
 
-        bool showCLipboard = true;
+        SuggestedForm suggestedList = new SuggestedForm();
+
+        bool autoHide = true;
         string autoCommand = "";
+        string suggestedCommand = "";
 
         [DllImport("User32.dll")]
         public static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
@@ -39,34 +46,13 @@ namespace Sugar
         private bool settingClipboardViewer = true;
         private IntPtr _nextClipboardViewer;		// The next clipboard in the Windows clipboard chain
 
-        public String ClipboardText
-        {
-            get
-            {
-                string text = "";
-                if (System.Windows.Forms.Clipboard.GetDataObject().GetDataPresent(DataFormats.UnicodeText))
-                {
-                    text = System.Windows.Forms.Clipboard.GetDataObject().GetData(DataFormats.UnicodeText).ToString();
-                }
-                return text;
-            }
-            set
-            {
-                try
-                {
-                    System.Windows.Forms.Clipboard.SetDataObject(value, true);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error Writting to Clipboard:" + Environment.NewLine + ex.ToString());
-                }
-            }
-        }
-
         public String CommandText
         {
             get { return commandTextBox.Text;  }
-            set { commandTextBox.Text = value;  }
+            set { 
+                    commandTextBox.Text = value;
+                    commandTextBox.SelectionStart = commandTextBox.Text.Length;
+                }
         }
 
         /// <summary>
@@ -102,7 +88,7 @@ namespace Sugar
                     {
                         if (m.WParam == (IntPtr)0xF020) //SC_MINIMIZE
                         {
-                            this.Hide();
+                            HideCommandWindow();
                             this.notifyIcon.Visible = true;
                         }
                         else
@@ -130,13 +116,73 @@ namespace Sugar
         {
             InitializeComponent();
 
+            CommandManager.InitCommands();
+
+            EventManager.Instance.HideEvent += Instance_hideEvent;
+            EventManager.Instance.ShowEvent += Instance_ShowEvent;
+            EventManager.Instance.MoveEvent += Instance_MoveEvent;
+
             notifyIcon.Text = Application.ProductName + " - MLH Software";
             //this.BackColor = Color.White;
             //this.TransparencyKey = Color.White;
         }
 
+        void Instance_MoveEvent(object sender, EventArgs e)
+        {
+            int height = SystemInformation.VirtualScreen.Height;
+            int y = this.Location.Y;
+            if (y == 0)
+            {
+                y = (int)((height - this.Height) / 2);
+            }
+            else
+            {
+                y = 0;
+            }
+            this.Location = new Point(this.Location.X, y);
+        }
+
+        void Instance_ShowEvent(object sender, EventArgs e)
+        {
+            autoHide = clipboardPreview.ToggleForm();
+        }
+
+        private void OnClipboardChanged()
+        {
+            clipboardPreview.UpdateDisplay();
+        }
+
+        void Instance_hideEvent(object sender, EventArgs e)
+        {
+            CommandText = "";
+            if (autoHide)
+            {
+                HideCommandWindow();
+            }
+        }
+
+        private void HideCommandWindow()
+        {
+            clipboardPreview.HideForm();
+            Hide();
+        }
+
+        private void ShowCommandWindow()
+        {
+            Visible = true;
+            TopMost = true;
+            TopLevel = true;
+
+            if (!autoHide)
+            {
+                clipboardPreview.ShowForm();
+            }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            Cef.Initialize();
+            this.TopMost = true;
             this.Visible = false;
             this.WindowState = FormWindowState.Normal;
 
@@ -149,30 +195,10 @@ namespace Sugar
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Cef.Shutdown();
             // Remove ourselves from OS clipboard notifications
             ChangeClipboardChain(Handle, _nextClipboardViewer);
             HotKeysManager.Instance.ReleaseHotKeys();
-        }
-
-
-        private void OnClipboardChanged()
-        {
-            if (showCLipboard == true)
-            {
-                ShowClipboard();
-            }
-        }
-
-        private void ShowClipboard()
-        {
-            if (Clipboard.ContainsText())
-            {
-                ShowBalloonTip(Clipboard.GetText());
-            }
-            else
-            {
-                clipboardPreview.ShowForm();
-            }
         }
 
         private void ShowBalloonTip(string text)
@@ -196,10 +222,8 @@ namespace Sugar
 
         internal void HotKeyPressed()
         {
-            Visible = true;
-            TopMost = true;
-            TopLevel = true;
-            //OnClipboardChanged();
+            ShowCommandWindow();
+
         }
 
         internal void AutoHotKeyPressed()
@@ -217,39 +241,70 @@ namespace Sugar
             }
         }
 
-        
-
         private void notifyIcon_DoubleClick(object sender, EventArgs e)
         {
-            this.Show();
+            ShowCommandWindow();
         }
 
         private void CommandForm_VisibleChanged(object sender, EventArgs e)
         {
-            CommandText = "";
-            commandTextBox.Focus();
+            if (this.Visible == true)
+            {
+                // 'Steal' the focus.
+                this.Activate();
+                CommandText = "";
+                commandTextBox.Focus();
+            }
             Console.WriteLine("CommandForm_VisibleChanged");
         }
 
-
-
-
         private void ProcessCommand()
         {
-            bool handled = CommandManager.ExecuteCommand(CommandText);
-            if (handled)
+            List<string> command = new List<string>();
+            List<string> tmp = CommandText.Split('▶').ToList<string>();
+            foreach (var item in tmp)
             {
-                CommandText = "";
-                this.Hide();
+                command.Add(item.Trim());
+            }
+
+            bool foundCommand = CommandManager.ExecuteCommand(command.FirstOrDefault(), command.ToArray());
+            if (!foundCommand)
+            {
+                CommandManager.ExecuteCommand(suggestedCommand, command.ToArray());
             }
             commandTextBox.Focus();
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Tab)
+            {
+                if (CommandText.Length < suggestedCommand.Length)
+                {
+                    CommandText = suggestedCommand;
+                }
+                else
+                {
+                    CommandText = CommandText + " ▶ ";
+                }
+            }
+            else if (keyData == Keys.PageDown)
+            {
+                webForm.Show();
+            }
+            else if (keyData == Keys.PageUp)
+            {
+                webForm.Hide();
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private void CommandForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
-                this.Hide();
+                HideCommandWindow();
             }
         }
 
@@ -261,9 +316,14 @@ namespace Sugar
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
+            else if (e.KeyCode == Keys.Delete)
+            {
+                CommandText = "";
+            }
+            
             else if (e.KeyCode == Keys.Escape)
             {
-                this.Hide();
+                HideCommandWindow();
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
@@ -271,17 +331,33 @@ namespace Sugar
 
         private void commandTextBox_TextChanged(object sender, EventArgs e)
         {
-            List<string> list = CommandManager.Search(CommandText);
+            string[] command = CommandText.Split('▶');
+            if (command.Length > 0)
+            {
+                List<ICommand> list = CommandManager.Search(command[0].Trim());
+                if (list.Count > 0)
+                {
+                    int paramIndex = command.Length - 2;
 
-            if (list.Count > 0)
-            {
-                tbShadow.Text = list[0];
+                    if (paramIndex >= 0 && list[0].ParamList != null && list[0].ParamList.Length > paramIndex)
+                    {
+                        suggestedCommand = list[0].ParamList[paramIndex ];
+                    }
+                    else
+                    {
+                        suggestedCommand = list[0].Name;
+                    }
+                    //suggestedList.SetSuggestions(list);
+                    //suggestedList.Location = new Point(this.Location.X + 17, this.Location.Y + 100);
+                    //suggestedList.Show();
+                }
+                else
+                {
+                    suggestedCommand = "";
+                    //suggestedList.Hide();
+                }
             }
-            else
-            {
-                tbShadow.Text = "";
-            }
+            suggestedLabel.Text = suggestedCommand;
         }
-
     }
 }

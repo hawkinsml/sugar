@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Sugar.Helpers
@@ -47,5 +49,63 @@ namespace Sugar.Helpers
             return list;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        static public int HowMany(this string input, char letter )
+        {
+            int retVal = 0;
+            foreach (char c in input.ToCharArray())
+            {
+                if (c == letter)
+                {
+                    retVal++;
+                }
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        static public string SaveAsTextFile(this string input, string fileName = null)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                fileName = Path.GetTempFileName();
+                fileName = Path.ChangeExtension(fileName, ".txt");
+            }
+            File.WriteAllText(fileName, input);
+            return fileName;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        static public int GetNumber(this string input)
+        {
+            int retVal = -1;
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                Regex re = new Regex(@"\d+");
+                Match m = re.Match(input);
+                if (m.Success)
+                {
+                    try
+                    {
+                        retVal = int.Parse(m.Value);
+                    }
+                    catch (Exception) { }
+                }
+            }
+            return retVal;
+        }
     }
 }

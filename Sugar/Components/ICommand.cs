@@ -6,13 +6,26 @@ using System.Threading.Tasks;
 
 namespace Sugar.Components.Commands
 {
-    interface ICommand
+    public interface ICommand
     {
         string Name
         {
             get;
             //set;
         }
-        void Execute(string[] args);
+
+        string[] ParamList
+        {
+            get;
+            //set;
+        }
+
+        string Help
+        {
+            get;
+            //set;
+        }
+
+        bool Execute(string[] args);
     }
 }

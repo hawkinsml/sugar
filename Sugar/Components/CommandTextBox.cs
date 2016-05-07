@@ -10,6 +10,44 @@ namespace Sugar.Components
     public class CommandTextBox : TextBox
     {
 
+        public CommandTextBox()
+        {
+            base.AutoSize = false; // so font is not clipped at bottom
+
+			// here we set the style and get a white Background
+			// and the overriden methods are accessed 
+	//	    this.SetStyle(ControlStyles.UserPaint, true);
+			this.Invalidate(true); 
+        }
+
+		protected override void OnPaint(PaintEventArgs e) {
+		 // your code follows here
+		//	base.OnPaint(e);
+		}
+ 
+ 
+		protected override void OnPaintBackground(PaintEventArgs pevent) {
+			Graphics g = pevent.Graphics;
+            base.OnPaintBackground(pevent);
+            string drawString = "Sample Text";
+            System.Drawing.Font drawFont = this.Font;
+            System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.LightGray);
+            float x = 0F;
+            float y = 0F;
+            System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat();
+            g.DrawString(drawString, drawFont, drawBrush, x, y, drawFormat);
+            //drawFont.Dispose();
+            drawBrush.Dispose();
+            //formGraphics.Dispose();
+
+
+			// your code follows here
+			
+		}
+
+    }
+
+    /*
         [DllImport("user32")]
         private static extern IntPtr GetWindowDC(IntPtr hwnd);
         struct RECT
@@ -56,15 +94,32 @@ namespace Sugar.Components
                 IntPtr wDC = GetWindowDC(Handle);
                 using (Graphics g = Graphics.FromHdc(wDC))
                 {
-                    ControlPaint.DrawBorder(g, new Rectangle(0, 0, Size.Width, Size.Height), borderColor, actualBorderWidth, ButtonBorderStyle.Solid,
-                  borderColor, actualBorderWidth, ButtonBorderStyle.Solid, borderColor, actualBorderWidth, ButtonBorderStyle.Solid,
-                  borderColor, actualBorderWidth, ButtonBorderStyle.Solid);
+                    DrawShadowText(g);
+            //        ControlPaint.DrawBorder(g, new Rectangle(0, 0, Size.Width, Size.Height), borderColor, actualBorderWidth, ButtonBorderStyle.Solid,
+            //      borderColor, actualBorderWidth, ButtonBorderStyle.Solid, borderColor, actualBorderWidth, ButtonBorderStyle.Solid,
+            //      borderColor, actualBorderWidth, ButtonBorderStyle.Solid);
                 }
                 return;
             }
             base.WndProc(ref m);
         }
 
+        private void DrawShadowText(Graphics g)
+        {
+            //System.Drawing.Graphics formGraphics = this.CreateGraphics();
+            string drawString = "Sample Text";
+            System.Drawing.Font drawFont = this.Font;
+            System.Drawing.SolidBrush drawBrush = new System.Drawing.SolidBrush(System.Drawing.Color.LightGray);
+            float x = 0F;
+            float y = 0F;
+            System.Drawing.StringFormat drawFormat = new System.Drawing.StringFormat();
+            g.DrawString(drawString, drawFont, drawBrush, x, y, drawFormat);
+            //drawFont.Dispose();
+            drawBrush.Dispose();
+            //formGraphics.Dispose();
+        }
+
     }
+     * */
 }
 
