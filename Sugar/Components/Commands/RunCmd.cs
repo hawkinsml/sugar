@@ -59,6 +59,7 @@ namespace Sugar.Components.Commands
             {
                 Process app = new Process();
                 app.StartInfo.FileName = Exe.Path;
+                app.StartInfo.Arguments = Exe.Arguments;
 
                 //foreach (string arg in args)
                 //{

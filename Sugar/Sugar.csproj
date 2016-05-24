@@ -118,6 +118,8 @@
   <ItemGroup>
     <Compile Include="Components\Commands\Clear.cs" />
     <Compile Include="Components\Commands\Base64.cs" />
+    <Compile Include="Components\Commands\Settings.cs" />
+    <Compile Include="Components\Commands\Line.cs" />
     <Compile Include="Components\Commands\WeMo.cs" />
     <Compile Include="Components\Commands\Prettify.cs" />
     <Compile Include="Components\Commands\Pop.cs" />
@@ -143,6 +145,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddExecutableForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AddExecutableForm.Designer.cs">
+      <DependentUpon>AddExecutableForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\ClipboardViewForm.cs">
       <SubType>Form</SubType>
@@ -170,6 +178,18 @@
     <Compile Include="Helpers\StringExtension.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\AddScriptCmdForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AddScriptCmdForm.Designer.cs">
+      <DependentUpon>AddScriptCmdForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\SuggestedForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,6 +202,9 @@
     <Compile Include="Views\WebForm.Designer.cs">
       <DependentUpon>WebForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\AddExecutableForm.resx">
+      <DependentUpon>AddExecutableForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ClipboardViewForm.resx">
       <DependentUpon>ClipboardViewForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -198,6 +221,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Views\AddScriptCmdForm.resx">
+      <DependentUpon>AddScriptCmdForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\SuggestedForm.resx">
       <DependentUpon>SuggestedForm.cs</DependentUpon>
     </EmbeddedResource>

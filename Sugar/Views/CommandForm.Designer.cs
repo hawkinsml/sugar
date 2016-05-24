@@ -48,7 +48,7 @@ namespace Sugar
             this.suggestedLabel.BackColor = System.Drawing.Color.Transparent;
             this.suggestedLabel.Font = new System.Drawing.Font("Verdana", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.suggestedLabel.ForeColor = System.Drawing.Color.DarkGray;
-            this.suggestedLabel.Location = new System.Drawing.Point(18, 5);
+            this.suggestedLabel.Location = new System.Drawing.Point(18, 100);
             this.suggestedLabel.Name = "suggestedLabel";
             this.suggestedLabel.Size = new System.Drawing.Size(0, 23);
             this.suggestedLabel.TabIndex = 3;
@@ -78,7 +78,7 @@ namespace Sugar
             this.BackColor = System.Drawing.Color.HotPink;
             this.BackgroundImage = global::Sugar.Properties.Resources.commandwindow;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(456, 100);
+            this.ClientSize = new System.Drawing.Size(456, 130);
             this.ControlBox = false;
             this.Controls.Add(this.suggestedLabel);
             this.Controls.Add(this.commandTextBox);

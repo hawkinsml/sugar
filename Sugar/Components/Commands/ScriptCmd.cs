@@ -58,11 +58,12 @@ namespace Sugar.Components.Commands
                 //CSScript.Evaluator.ReferenceAssembly(Assembly.GetAssembly(typeof(System.Windows.Forms.Clipboard)));
                 dynamic script = CSScript.Evaluator.LoadCode(Cmd.SourceCode);
 
-                string clipboard = Clipboard.GetText();
-                retVal = script.Execute(out clipboard, args);
-                if (!string.IsNullOrWhiteSpace(clipboard))
+                string clipboardText = Clipboard.GetText();
+                string resultText = clipboardText;
+                retVal = script.Execute(args, clipboardText, out resultText);
+                if (!string.IsNullOrWhiteSpace(resultText))
                 {
-                    Clipboard.SetText(clipboard.ToUpper(), TextDataFormat.Text);
+                    Clipboard.SetText(resultText, TextDataFormat.Text);
                 }
                 else
                 {

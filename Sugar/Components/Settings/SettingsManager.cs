@@ -57,6 +57,8 @@ namespace Sugar.Components.Settings
 
             json.SaveAsTextFile(fullFileName);
 
+            EventManager.Instance.FireSettingsChangedEvent();
+
             return retVal;
         }
 

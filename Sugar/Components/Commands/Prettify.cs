@@ -31,25 +31,42 @@ namespace Sugar.Components.Commands
             get
             {
                 return "<h3>Prettify</h3>" +
-                    "<p>Format XML or JSON string to multiply lines and nice indents.</p>";
+                    "<p>Format XML or JSON string to multiply lines and nice indents.</p>" +
+                     "<dl>" +
+                    "<dt>XML | JSON <span class='label label-default'>optional</span></dt>" +
+                    "<dd>Tell prettify if the text is xml or json. Prettify will assume XML if the text starts with \"&lt;\"</dd>" +
+                    "</dl>";
             }
-
-        
         }
 
         public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
 
-            bool json = false;
+            bool xml = true;
             if (args.Length > 1 && !string.IsNullOrWhiteSpace(args[1]))
             {
-                json = args[1].StartsWith("j", StringComparison.OrdinalIgnoreCase);
+                xml = args[1].StartsWith("j", StringComparison.OrdinalIgnoreCase);
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    string check = text.TrimStart();
+                    if (check.Length > 0 && check[0] == '<')
+                    {
+                        xml = true;
+                    }
+                    else
+                    {
+                        xml = false;
+                    }
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(text))
             {
-                string formatedText = json ? FormatJson(text) : FormatXml(text);
+                string formatedText = xml ? FormatXml(text) : FormatJson(text);
 
                 try
                 {

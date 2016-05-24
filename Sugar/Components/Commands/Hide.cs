@@ -20,7 +20,7 @@ namespace Sugar.Components.Commands
 
         public string Help
         {
-            get { return "<h3>Hide</h3><p>Hides the command prompt. Same as pressing <kbd>esc</kbd> key</p>"; }
+            get { return "<h3>Hide</h3><p>Hides the command prompt. Same as pressing <kbd>esc</kbd> key.</p>"; }
         }
 
         public string[] ParamList

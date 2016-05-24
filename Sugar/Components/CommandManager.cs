@@ -15,6 +15,7 @@ namespace Sugar.Components.Commands
 
         static public void InitCommands()
         {
+            CommandHandlers.Clear();
             foreach (Type taskHandler in Assembly.GetExecutingAssembly().GetTypes().Where(o => o.GetInterfaces().Contains(typeof(ICommand))))
             {
                 MethodInfo method = taskHandler.GetMethod("Init", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
@@ -50,6 +51,7 @@ namespace Sugar.Components.Commands
                     {
                         EventManager.Instance.FireHideEvent();
                     }
+                    break;
                 }
             }
             return foundCommand;

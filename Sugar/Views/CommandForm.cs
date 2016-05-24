@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CefSharp;
 using CSScriptLibrary;
+using Microsoft.Win32;
 using Sugar.Components;
 using Sugar.Components.Commands;
 using Sugar.Helpers;
@@ -25,7 +26,13 @@ namespace Sugar
         CommandManager cmdHandler = new CommandManager();
         WebForm webForm = new WebForm();
 
-        SuggestedForm suggestedList = new SuggestedForm();
+        //SuggestedForm suggestedList = new SuggestedForm();
+
+        List<ICommand> suggestedList = null;
+        int suggestIndex = 0;
+
+        // The path to the key where Windows looks for startup applications
+        RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
         bool autoHide = true;
         string autoCommand = "";
@@ -54,6 +61,35 @@ namespace Sugar
                     commandTextBox.SelectionStart = commandTextBox.Text.Length;
                 }
         }
+
+
+        private void SetForStartUp()
+        {
+            bool set = false;
+            // Check to see the current state (running at startup or not)
+            if (rkApp.GetValue(Application.ProductName) == null)
+            {
+                // The value doesn't exist, the application is not set to run at startup
+                set = false;
+            }
+            else
+            {
+                // The value exists, the application is set to run at startup
+                set = true;
+            }
+
+            if (!set)
+            {
+                // Add the value in the registry so that the application runs at startup
+                rkApp.SetValue(Application.ProductName, Application.ExecutablePath);
+            }
+            else
+            {
+                // Remove the value from the registry so that the application doesn't start
+                rkApp.DeleteValue(Application.ProductName, false);
+            }
+        }
+    
 
         /// <summary>
         /// Handles the clipboard calls from the operating system and forwards them
@@ -115,16 +151,22 @@ namespace Sugar
         public CommandForm()
         {
             InitializeComponent();
+            SetForStartUp();
 
             CommandManager.InitCommands();
 
             EventManager.Instance.HideEvent += Instance_hideEvent;
             EventManager.Instance.ShowEvent += Instance_ShowEvent;
             EventManager.Instance.MoveEvent += Instance_MoveEvent;
-
+            EventManager.Instance.SettingsChangedEvent += Instance_SettingsChangedEvent;
             notifyIcon.Text = Application.ProductName + " - MLH Software";
             //this.BackColor = Color.White;
             //this.TransparencyKey = Color.White;
+        }
+
+        void Instance_SettingsChangedEvent(object sender, EventArgs e)
+        {
+            CommandManager.InitCommands();
         }
 
         void Instance_MoveEvent(object sender, EventArgs e)
@@ -320,12 +362,29 @@ namespace Sugar
             {
                 CommandText = "";
             }
-            
             else if (e.KeyCode == Keys.Escape)
             {
                 HideCommandWindow();
                 e.Handled = true;
                 e.SuppressKeyPress = true;
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                if (suggestIndex < suggestedList.Count - 1)
+                {
+                    suggestIndex++;
+                    suggestedCommand = suggestedList[suggestIndex].Name;
+                    suggestedLabel.Text = suggestedCommand;
+                }
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                if (suggestIndex > 0)
+                {
+                    suggestIndex--;
+                    suggestedCommand = suggestedList[suggestIndex].Name;
+                    suggestedLabel.Text = suggestedCommand;
+                }
             }
         }
 
@@ -334,18 +393,19 @@ namespace Sugar
             string[] command = CommandText.Split('▶');
             if (command.Length > 0)
             {
-                List<ICommand> list = CommandManager.Search(command[0].Trim());
-                if (list.Count > 0)
+                suggestIndex = 0;
+                suggestedList = CommandManager.Search(command[0].Trim());
+                if (suggestedList.Count > 0)
                 {
                     int paramIndex = command.Length - 2;
 
-                    if (paramIndex >= 0 && list[0].ParamList != null && list[0].ParamList.Length > paramIndex)
+                    if (paramIndex >= 0 && suggestedList[0].ParamList != null && suggestedList[0].ParamList.Length > paramIndex)
                     {
-                        suggestedCommand = list[0].ParamList[paramIndex ];
+                        suggestedCommand = suggestedList[0].ParamList[paramIndex];
                     }
                     else
                     {
-                        suggestedCommand = list[0].Name;
+                        suggestedCommand = suggestedList[0].Name;
                     }
                     //suggestedList.SetSuggestions(list);
                     //suggestedList.Location = new Point(this.Location.X + 17, this.Location.Y + 100);
