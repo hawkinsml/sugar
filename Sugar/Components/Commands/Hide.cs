@@ -8,9 +8,9 @@ namespace Sugar.Components.Commands
 {
     class Hide : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Hide());
+            commandManager.AddCommandHandler(new Hide());
         }
 
         public string Name

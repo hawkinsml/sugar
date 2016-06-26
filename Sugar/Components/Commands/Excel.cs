@@ -15,9 +15,9 @@ namespace Sugar.Components.Commands
 {
     class Excel : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Excel());
+            commandManager.AddCommandHandler(new Excel());
         }
 
         public string Name

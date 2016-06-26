@@ -10,9 +10,9 @@ namespace Sugar.Components.Commands
 {
     class Clear : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Clear());
+            commandManager.AddCommandHandler(new Clear());
         }
 
         public string Name

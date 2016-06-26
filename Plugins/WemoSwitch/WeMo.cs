@@ -5,15 +5,19 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using WemoSwitch.WeMoService; // https://raw.github.com/sklose/WeMoWsdl/master/BasicService.wsdl
 using UPNPLib;
+using Sugar;
 
-namespace Sugar.Components.Commands
+namespace WemoSwitch.Components.Commands
 {
     class WeMo : ICommand
     {
-        static public void Init()
+        int port = 49153;
+
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new WeMo());
+            commandManager.AddCommandHandler(new WeMo());
         }
 
         public string Name
@@ -92,7 +96,7 @@ namespace Sugar.Components.Commands
 
                 foreach (UPnPDevice upnpDevice in devices)
                 {
-                
+
                     string port = new Uri(upnpDevice.PresentationURL).Port.ToString();
                     string baseUrl = new Uri(upnpDevice.PresentationURL).DnsSafeHost.ToString();
 
@@ -102,7 +106,7 @@ namespace Sugar.Components.Commands
 
                 }
 
-//                    b.ReportProgress(i * 10);
+                //                    b.ReportProgress(i * 10);
 
             });
 
@@ -131,38 +135,7 @@ namespace Sugar.Components.Commands
             bw.WorkerReportsProgress = true;
 
             // what to do in the background thread
-            bw.DoWork += new DoWorkEventHandler(
-            delegate(object o, DoWorkEventArgs args)
-            {
-                BackgroundWorker b = o as BackgroundWorker;
-                try
-                {
-                    string ip = "192.168.86.177";
-                    int port = 49154;
-
-                    var client = new WeMoService.BasicServicePortTypeClient();
-                    
-                    client.Endpoint.Address = new EndpointAddress(string.Format("http://{0}:{1}/upnp/control/basicevent1", ip, port));
-
-                    var state = client.GetBinaryState(new WeMoService.GetBinaryState());
-                    Console.WriteLine("Switch is current set to: {0}", state.BinaryState);
-
-                    if (state.BinaryState == "0")
-                    {
-                        state.BinaryState = "1";
-                    }
-                    else
-                    {
-                        state.BinaryState = "0";
-                    }
-
-                    var msg = new WeMoService.SetBinaryState { BinaryState = state.BinaryState };
-                    client.SetBinaryState(msg);
-
-                }
-                catch (Exception ex) { }
-
-            });
+            bw.DoWork += new DoWorkEventHandler(dowork);
 
             // what to do when progress changed (update the progress bar for example)
             bw.ProgressChanged += new ProgressChangedEventHandler(
@@ -181,6 +154,97 @@ namespace Sugar.Components.Commands
             bw.RunWorkerAsync();
         }
 
+        private void doworkNotWorking(object o, DoWorkEventArgs args)
+        {
+            BackgroundWorker b = o as BackgroundWorker;
+            string ip = "192.168.86.177";
+            Console.WriteLine(string.Format("Wemo Address: http://{0}:{1}/upnp/control/basicevent1", ip, port));
+
+            WSHttpBinding binding = new WSHttpBinding();
+            binding.OpenTimeout = new TimeSpan(0, 0, 20);
+            binding.CloseTimeout = new TimeSpan(0, 1, 0);
+            binding.SendTimeout = new TimeSpan(0, 1, 0);
+            binding.ReceiveTimeout = new TimeSpan(0, 1, 0);
+
+            var client = new WeMoService.BasicServicePortTypeClient(binding, new EndpointAddress(string.Format("http://{0}:{1}/upnp/control/basicevent1", ip, port)));
+            GetBinaryStateResponse state = null;
+            try
+            {
+                
+                state = client.GetBinaryState(new WeMoService.GetBinaryState());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                if (port == 49154)
+                {
+                    port = 49153;
+                }
+                else
+                {
+                    port = 49154;
+                }
+                try
+                {
+                    Console.WriteLine(string.Format("Wemo Address: http://{0}:{1}/upnp/control/basicevent1", ip, port));
+                    client = new WeMoService.BasicServicePortTypeClient(binding, new EndpointAddress(string.Format("http://{0}:{1}/upnp/control/basicevent1", ip, port)));
+                    state = client.GetBinaryState(new WeMoService.GetBinaryState());
+                }
+                catch (Exception ex2) { Console.WriteLine(ex2.Message); }
+            }
+
+            try
+            {
+                Console.WriteLine("Switch is current set to: {0}", state.BinaryState);
+                if (state != null)
+                {
+                    if (state.BinaryState == "0")
+                    {
+                        state.BinaryState = "1";
+                    }
+                    else
+                    {
+                        state.BinaryState = "0";
+                    }
+
+                    var msg = new WeMoService.SetBinaryState { BinaryState = state.BinaryState };
+                    client.SetBinaryState(msg);
+                }
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+        }
+
+        private void dowork(object o, DoWorkEventArgs args)
+         {
+             try
+             {
+                 string ip = "192.168.86.177";
+                 int port = 49153;
+ 
+                 var client = new WeMoService.BasicServicePortTypeClient();
+                 client.Endpoint.Address = new EndpointAddress(string.Format("http://{0}:{1}/upnp/control/basicevent1", ip, port));
+ 
+                 var state = client.GetBinaryState(new WeMoService.GetBinaryState());
+                 Console.WriteLine("Switch is current set to: {0}", state.BinaryState);
+ 
+                 if (state.BinaryState == "0")
+                 {
+                     state.BinaryState = "1";
+                 }
+                 else
+                 {
+                     state.BinaryState = "0";
+                 }
+ 
+                 var msg = new WeMoService.SetBinaryState { BinaryState = state.BinaryState };
+                 client.SetBinaryState(msg);
+ 
+             }
+             catch (Exception ex) { }
+         }
+
+
         private void GetAllDevices()
         {
             var finder = new UPnPDeviceFinder();
@@ -191,7 +255,7 @@ namespace Sugar.Components.Commands
 
             foreach (UPnPDevice upnpDevice in devices)
             {
-                
+
                 string port = new Uri(upnpDevice.PresentationURL).Port.ToString();
                 string baseUrl = new Uri(upnpDevice.PresentationURL).DnsSafeHost.ToString();
 

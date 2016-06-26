@@ -15,9 +15,9 @@ namespace Sugar.Components.Commands
     {
         private Stack<string> textStack = new Stack<string>();
 
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Push());
+            commandManager.AddCommandHandler(new Push());
         }
 
         public string Name

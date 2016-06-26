@@ -13,7 +13,7 @@ namespace Sugar.Components.Commands
 {
     class ScriptCmd : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
             SettingsModal data = SettingsManager.LoadSettings();
 
@@ -21,7 +21,7 @@ namespace Sugar.Components.Commands
             {
                 foreach (CommandModel cmd in data.Commands)
                 {
-                    CommandManager.AddCommandHandler(new ScriptCmd(cmd));
+                    commandManager.AddCommandHandler(new ScriptCmd(cmd));
                 }
             }
         }

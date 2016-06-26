@@ -13,9 +13,9 @@ namespace Sugar.Components.Commands
 {
     class Edit : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Edit());
+            commandManager.AddCommandHandler(new Edit());
         }
 
         public string Name

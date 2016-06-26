@@ -11,9 +11,9 @@ namespace Sugar.Components.Commands
 {
     class Prettify : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Prettify());
+            commandManager.AddCommandHandler(new Prettify());
         }
 
         public string Name

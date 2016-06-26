@@ -14,17 +14,14 @@ namespace Sugar.Components.Commands
 {
     class RunCmd : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            
-
             SettingsModal data = SettingsManager.LoadSettings();
-
             if (data != null)
             {
                 foreach (ExecutableModel exe in data.Executables)
                 {
-                    CommandManager.AddCommandHandler(new RunCmd(exe));
+                    commandManager.AddCommandHandler(new RunCmd(exe));
                 }
             }
         }
@@ -35,6 +32,8 @@ namespace Sugar.Components.Commands
         public RunCmd(ExecutableModel exe)
         {
             this.Exe = exe;
+
+            Exe.Path = Exe.Path.Replace("%windir%", Environment.GetFolderPath(Environment.SpecialFolder.Windows));
         }
 
         public string Name
@@ -58,16 +57,24 @@ namespace Sugar.Components.Commands
             try
             {
                 Process app = new Process();
-                app.StartInfo.FileName = Exe.Path;
-                app.StartInfo.Arguments = Exe.Arguments;
+                if ( Exe.Path.Contains('{'))
+                {
+                    app.StartInfo.FileName = string.Format(Exe.Path, args);
+                }
+                else
+                {
+                    app.StartInfo.FileName = Exe.Path;
+                }
 
-                //foreach (string arg in args)
-                //{
-                //}
-                //app.StartInfo.Arguments = "";
+                if ( Exe.Arguments.Contains('{'))
+                {
+                    app.StartInfo.Arguments = string.Format(Exe.Arguments, args);
+                }
+                else
+                {
+                    app.StartInfo.Arguments = Exe.Arguments;
+                }                
                 app.Start();
-
-
             }
             catch (Exception ex)
             {

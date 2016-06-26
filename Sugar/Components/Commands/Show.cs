@@ -8,9 +8,9 @@ namespace Sugar.Components.Commands
 {
     class Show : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Show());
+            commandManager.AddCommandHandler(new Show());
         }
 
         public string Name

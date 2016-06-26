@@ -12,9 +12,9 @@ namespace Sugar.Components.Commands
 {
     class SettingsCmd : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new SettingsCmd());
+            commandManager.AddCommandHandler(new SettingsCmd());
         }
 
         public string Name

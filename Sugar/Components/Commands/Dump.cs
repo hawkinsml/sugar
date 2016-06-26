@@ -12,9 +12,9 @@ namespace Sugar.Components.Commands
 {
     class Dump : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Dump());
+            commandManager.AddCommandHandler(new Dump());
         }
 
         public string Name

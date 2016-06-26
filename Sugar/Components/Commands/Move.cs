@@ -8,9 +8,9 @@ namespace Sugar.Components.Commands
 {
     class Move : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Move());
+            commandManager.AddCommandHandler(new Move());
         }
 
         public string Name

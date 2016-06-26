@@ -10,9 +10,9 @@ namespace Sugar.Components.Commands
 {
     public class AddCommas : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new AddCommas());
+            commandManager.AddCommandHandler(new AddCommas());
         }
 
         public string Name

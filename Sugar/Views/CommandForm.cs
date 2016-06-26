@@ -26,6 +26,8 @@ namespace Sugar
         CommandManager cmdHandler = new CommandManager();
         WebForm webForm = new WebForm();
 
+        CommandManager commandManager = new CommandManager();
+
         //SuggestedForm suggestedList = new SuggestedForm();
 
         List<ICommand> suggestedList = null;
@@ -153,7 +155,7 @@ namespace Sugar
             InitializeComponent();
             SetForStartUp();
 
-            CommandManager.InitCommands();
+            commandManager.InitCommands();
 
             EventManager.Instance.HideEvent += Instance_hideEvent;
             EventManager.Instance.ShowEvent += Instance_ShowEvent;
@@ -166,7 +168,7 @@ namespace Sugar
 
         void Instance_SettingsChangedEvent(object sender, EventArgs e)
         {
-            CommandManager.InitCommands();
+            commandManager.InitCommands();
         }
 
         void Instance_MoveEvent(object sender, EventArgs e)
@@ -309,10 +311,10 @@ namespace Sugar
                 command.Add(item.Trim());
             }
 
-            bool foundCommand = CommandManager.ExecuteCommand(command.FirstOrDefault(), command.ToArray());
+            bool foundCommand = commandManager.ExecuteCommand(command.FirstOrDefault(), command.ToArray());
             if (!foundCommand)
             {
-                CommandManager.ExecuteCommand(suggestedCommand, command.ToArray());
+                commandManager.ExecuteCommand(suggestedCommand, command.ToArray());
             }
             commandTextBox.Focus();
         }
@@ -394,7 +396,7 @@ namespace Sugar
             if (command.Length > 0)
             {
                 suggestIndex = 0;
-                suggestedList = CommandManager.Search(command[0].Trim());
+                suggestedList = commandManager.Search(command[0].Trim());
                 if (suggestedList.Count > 0)
                 {
                     int paramIndex = command.Length - 2;

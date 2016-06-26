@@ -13,9 +13,16 @@ namespace Sugar.Components.Commands
 {
     class Pop : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Pop());
+            commandManager.AddCommandHandler(new Pop(commandManager));
+        }
+
+        ICommandManager commandManager;
+
+        public Pop(ICommandManager commandManager)
+        {
+            this.commandManager = commandManager;
         }
 
         public string Name
@@ -35,7 +42,7 @@ namespace Sugar.Components.Commands
 
         public bool Execute(string[] args)
         {
-            return CommandManager.ExecuteCommand("Push", "pop");
+            return commandManager.ExecuteCommand("Push", "pop");
         }
 
     }

@@ -9,9 +9,9 @@ namespace Sugar.Components.Commands
 {
     class Quit : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Quit());
+            commandManager.AddCommandHandler(new Quit());
         }
 
         public string Name

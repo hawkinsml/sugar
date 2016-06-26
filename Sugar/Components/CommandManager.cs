@@ -1,37 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CSScriptLibrary;
+using Sugar.Components.Commands;
 
-namespace Sugar.Components.Commands
+namespace Sugar
 {
-    public class CommandManager
+    public class CommandManager : ICommandManager
     {
         static public List<ICommand> CommandHandlers = new List<ICommand>();
 
-        static public void InitCommands()
+        public void InitCommands()
         {
             CommandHandlers.Clear();
-            foreach (Type taskHandler in Assembly.GetExecutingAssembly().GetTypes().Where(o => o.GetInterfaces().Contains(typeof(ICommand))))
+            LoadCommands();
+        }
+
+        private void LoadCommands()
+        {
+            LoadPluginAssemblies();
+            var asseblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
+            //IEnumerable<Type> commandClasses = asseblies.SelectMany(a => a.GetTypes()).Where(o => o.GetInterfaces().Contains(typeof(Sugar.ICommand)));
+            IEnumerable<Type> commandClasses = asseblies.SelectMany(a => a.GetTypes()).Where(t => typeof(Sugar.ICommand).IsAssignableFrom(t));
+            InitCommands(commandClasses);
+        }
+
+        private void InitCommands(IEnumerable<Type> commandClasses)
+        {
+            object[] parameters = new object[1];
+            parameters[0] = this; // pass ICommandManager to Init methods
+            foreach (Type taskHandler in commandClasses)
             {
                 MethodInfo method = taskHandler.GetMethod("Init", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
                 if (method != null)
                 {
-                    method.Invoke(null, null);
+                    method.Invoke(null, parameters);
                 }
             }
         }
 
-        static public void AddCommandHandler(ICommand handler)
+        private void LoadPluginAssemblies()
+        {
+            string pluginPath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Plugins");
+
+            foreach (string dll in Directory.GetFiles(pluginPath, "*.dll", SearchOption.AllDirectories))
+            {
+                try
+                {                    
+                    Assembly loadedAssembly = Assembly.LoadFile(dll);
+                }
+                catch (FileLoadException loadEx)
+                { } // The Assembly has already been loaded.
+                catch (BadImageFormatException imgEx)
+                { } // If a BadImageFormatException exception is thrown, the file is not an assembly.
+
+            }
+        }
+
+
+        public void AddCommandHandler(ICommand handler)
         {
             CommandHandlers.Add(handler);
         }
 
-        static public bool ExecuteCommand(string commandName, string param)
+        public bool ExecuteCommand(string commandName, string param)
         {
             List<string> args = new List<string>();
             args.Add(commandName);
@@ -39,7 +77,7 @@ namespace Sugar.Components.Commands
             return ExecuteCommand(commandName, args.ToArray());
         }
 
-        static public bool ExecuteCommand(string commandName, string[] args)
+        public bool ExecuteCommand(string commandName, string[] args)
         {
             bool foundCommand = false;
             foreach (var handler in CommandHandlers)
@@ -57,7 +95,7 @@ namespace Sugar.Components.Commands
             return foundCommand;
         }
 
-        static public List<ICommand> Search(string text)
+        public List<ICommand> Search(string text)
         {
             List<ICommand> retVal = new List<ICommand>();
 
@@ -73,78 +111,5 @@ namespace Sugar.Components.Commands
             }
             return retVal;
         }
-
-
-
-        /*
-
-                    if (handled == false)
-                    {
-                        switch (CommandText.ToUpper())
-                        {
-                            case "SHOW ON":
-                                showCLipboard = true;
-                                handled = true;
-                                break;
-                            case "SHOW OFF":
-                                showCLipboard = false;
-                                handled = true;
-                                break;
-                        } 
- 
-                public string Execute(string text, string param)
-                {
-                    StringBuilder sb = new StringBuilder();
-                    string[] lines = text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-
-                    List<string> list = new List<string>(lines);
-                    foreach (var line in list.OrderBy(o => o).ToList())
-                    {
-                        sb.AppendLine(line.Trim());
-                    }
-                    return sb.ToString();
-                }
-
-                private string runScript(string text)
-                {
-                    string retVal = null;
-                    try
-                    {
-                        dynamic script = CSScript.Evaluator
-                                                 .CompileMethod("")
-                                                 .CreateObject("*");
-                        retVal = script.Execute(text, "");
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        //MessageBox.Show(ex.Message);
-                    }
-                    return retVal;
-                }
-
-                private void codeScrap()
-                {
-                    Console.WriteLine("Hot Key Pressed");
-
-
-                    if (Clipboard.ContainsText())
-                    {
-                        string clipBoardText = Clipboard.GetText();
-                        string newText = runScript(clipBoardText);
-                        if (newText != null)
-                        {
-                            Clipboard.SetText(newText, TextDataFormat.Text);
-                        }
-                        Console.WriteLine(clipBoardText);
-                        Console.WriteLine(newText);
-
-                        // Use SendKeys to Paste
-                        SendKeys.Send("^V");
-                    }
-                }
-
-
-         */
     }
 }

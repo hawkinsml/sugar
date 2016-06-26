@@ -9,9 +9,9 @@ namespace Sugar.Components.Commands
 {
     class Simplify : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Simplify());
+            commandManager.AddCommandHandler(new Simplify());
         }
 
         public string Name

@@ -46,3 +46,8 @@ C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug
 C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\HTMLResources\libs\bootstrap\fonts\glyphicons-halflings-regular.ttf
 C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\HTMLResources\libs\bootstrap\fonts\glyphicons-halflings-regular.woff
 C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\HTMLResources\libs\bootstrap\fonts\glyphicons-halflings-regular.woff2
+C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.Views.AddExecutableForm.resources
+C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.Views.AddScriptCmdForm.resources
+C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.Views.SettingsForm.resources
+C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\SugarCommandInterfaces.dll
+C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\SugarCommandInterfaces.pdb

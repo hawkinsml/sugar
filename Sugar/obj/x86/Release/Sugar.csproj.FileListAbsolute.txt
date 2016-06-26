@@ -97,3 +97,6 @@ C:\Users\MHawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Rele
 C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Release\Sugar.Views.SettingsForm.resources
 C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Release\Sugar.Views.AddExecutableForm.resources
 C:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Release\Sugar.Views.AddScriptCmdForm.resources
+C:\Users\MHawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Release\Sugar.Views.AddExecutableForm.resources
+C:\Users\MHawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Release\Sugar.Views.AddScriptCmdForm.resources
+C:\Users\MHawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Release\Sugar.Views.SettingsForm.resources

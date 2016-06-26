@@ -10,9 +10,9 @@ namespace Sugar.Components.Commands
 {
     public class MakeUpper : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new MakeUpper());
+            commandManager.AddCommandHandler(new MakeUpper());
         }
 
         public string Name
@@ -43,9 +43,9 @@ namespace Sugar.Components.Commands
 
     public class MakeLower : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new MakeLower());
+            commandManager.AddCommandHandler(new MakeLower());
         }
 
         public string Name
@@ -76,9 +76,9 @@ namespace Sugar.Components.Commands
 
     public class Trim : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Trim());
+            commandManager.AddCommandHandler(new Trim());
         }
 
         public string Name
@@ -119,9 +119,9 @@ namespace Sugar.Components.Commands
 
     public class Strip : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Strip());
+            commandManager.AddCommandHandler(new Strip());
         }
 
         public string Name

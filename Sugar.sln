@@ -3,22 +3,52 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sugar", "Sugar\Sugar.csproj", "{BB1C0204-479E-435A-9424-FE1442D3C336}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WemoSwitch", "Plugins\WemoSwitch\WemoSwitch.csproj", "{E40BBF16-9CA6-41BE-A6A7-2292ED6C0517}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SugarCommandInterfaces", "SugarCommandInterfaces\SugarCommandInterfaces.csproj", "{B9FC2185-9661-45CF-97C1-1BDC8F588F86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BB1C0204-479E-435A-9424-FE1442D3C336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BB1C0204-479E-435A-9424-FE1442D3C336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB1C0204-479E-435A-9424-FE1442D3C336}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{BB1C0204-479E-435A-9424-FE1442D3C336}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{BB1C0204-479E-435A-9424-FE1442D3C336}.Debug|x86.ActiveCfg = Debug|x86
 		{BB1C0204-479E-435A-9424-FE1442D3C336}.Debug|x86.Build.0 = Debug|x86
 		{BB1C0204-479E-435A-9424-FE1442D3C336}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB1C0204-479E-435A-9424-FE1442D3C336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB1C0204-479E-435A-9424-FE1442D3C336}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{BB1C0204-479E-435A-9424-FE1442D3C336}.Release|Mixed Platforms.Build.0 = Release|x86
 		{BB1C0204-479E-435A-9424-FE1442D3C336}.Release|x86.ActiveCfg = Release|x86
 		{BB1C0204-479E-435A-9424-FE1442D3C336}.Release|x86.Build.0 = Release|x86
+		{E40BBF16-9CA6-41BE-A6A7-2292ED6C0517}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E40BBF16-9CA6-41BE-A6A7-2292ED6C0517}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E40BBF16-9CA6-41BE-A6A7-2292ED6C0517}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E40BBF16-9CA6-41BE-A6A7-2292ED6C0517}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E40BBF16-9CA6-41BE-A6A7-2292ED6C0517}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E40BBF16-9CA6-41BE-A6A7-2292ED6C0517}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E40BBF16-9CA6-41BE-A6A7-2292ED6C0517}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E40BBF16-9CA6-41BE-A6A7-2292ED6C0517}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E40BBF16-9CA6-41BE-A6A7-2292ED6C0517}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E40BBF16-9CA6-41BE-A6A7-2292ED6C0517}.Release|x86.ActiveCfg = Release|Any CPU
+		{B9FC2185-9661-45CF-97C1-1BDC8F588F86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9FC2185-9661-45CF-97C1-1BDC8F588F86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9FC2185-9661-45CF-97C1-1BDC8F588F86}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B9FC2185-9661-45CF-97C1-1BDC8F588F86}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B9FC2185-9661-45CF-97C1-1BDC8F588F86}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B9FC2185-9661-45CF-97C1-1BDC8F588F86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9FC2185-9661-45CF-97C1-1BDC8F588F86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9FC2185-9661-45CF-97C1-1BDC8F588F86}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B9FC2185-9661-45CF-97C1-1BDC8F588F86}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B9FC2185-9661-45CF-97C1-1BDC8F588F86}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

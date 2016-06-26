@@ -10,9 +10,9 @@ namespace Sugar.Components.Commands
 {
     class T4 : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new T4());
+            commandManager.AddCommandHandler(new T4());
         }
 
         public string Name

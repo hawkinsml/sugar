@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sugar.Components
+namespace Sugar
 {
     public delegate void HideEventHandler(Object sender, EventArgs e);
     public delegate void ShowEventHandler(Object sender, EventArgs e);
     public delegate void MoveEventHandler(Object sender, EventArgs e);
     public delegate void SettingsChangedHandler(Object sender, EventArgs e);
 
-    class EventManager
+    public class EventManager
     {
         public event HideEventHandler HideEvent;
         public event ShowEventHandler ShowEvent;

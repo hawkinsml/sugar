@@ -34,7 +34,7 @@ namespace Sugar
         ReleaseHotKeys();
         Hotkey hotKey = new Hotkey();
         hotKey.KeyCode = Keys.Space;
-        hotKey.Control = true;
+        hotKey.Alt = true;
         hotKey.Pressed += delegate { mainWindow.HotKeyPressed(); };
         if (!hotKey.GetCanRegister(mainWindow))
         {

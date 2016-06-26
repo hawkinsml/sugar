@@ -10,9 +10,9 @@ namespace Sugar.Components.Commands
 {
     class Format : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Format());
+            commandManager.AddCommandHandler(new Format());
         }
 
         public string Name

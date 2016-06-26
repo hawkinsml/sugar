@@ -10,9 +10,9 @@ namespace Sugar.Components.Commands
 {
     class Base64 : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Base64());
+            commandManager.AddCommandHandler(new Base64());
         }
 
         public string Name

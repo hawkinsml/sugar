@@ -11,9 +11,9 @@ namespace Sugar.Components.Commands
 {
     class HelpCmd : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new HelpCmd());
+            commandManager.AddCommandHandler(new HelpCmd());
         }
 
         public string Name

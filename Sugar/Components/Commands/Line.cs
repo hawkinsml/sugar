@@ -10,9 +10,9 @@ namespace Sugar.Components.Commands
 {
     class Line : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Line());
+            commandManager.AddCommandHandler(new Line());
         }
 
         public string Name

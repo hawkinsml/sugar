@@ -12,9 +12,9 @@ namespace Sugar.Components.Commands
 {
     class Save : ICommand
     {
-        static public void Init()
+        static public void Init(ICommandManager commandManager)
         {
-            CommandManager.AddCommandHandler(new Save());
+            commandManager.AddCommandHandler(new Save());
         }
 
         public string Name
