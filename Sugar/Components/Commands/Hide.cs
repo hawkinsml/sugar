@@ -23,6 +23,21 @@ namespace Sugar.Components.Commands
             get { return "<h3>Hide</h3><p>Hides the command prompt. Same as pressing <kbd>esc</kbd> key.</p>"; }
         }
 
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return null; }
+        }
+
         public string[] ParamList
         {
             get { return null; }

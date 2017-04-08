@@ -13,6 +13,7 @@ namespace WemoSwitch.Components.Commands
 {
     class WeMo : ICommand
     {
+        string ip = "192.168.86.177";
         int port = 49153;
 
         static public void Init(ICommandManager commandManager)
@@ -27,7 +28,7 @@ namespace WemoSwitch.Components.Commands
 
         public string Help
         {
-            get { return "<h3>WeMo</h3><p>Turns on/off a WeMo Switch</p>"; }
+            get { return null; }
         }
 
         public string[] ParamList
@@ -35,10 +36,31 @@ namespace WemoSwitch.Components.Commands
             get { return null; }
         }
 
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return "Turns on/off a WeMo Switch"; }
+        }
+
         public bool Execute(string[] args)
         {
             try
             {
+                port = 49153;
+                if (args.Length > 1 && !string.IsNullOrWhiteSpace(args[1]))
+                {
+                    port = 49154;
+                }
+
                 runGetAllDevices();
                 runToggle();
                 /*
@@ -219,9 +241,6 @@ namespace WemoSwitch.Components.Commands
          {
              try
              {
-                 string ip = "192.168.86.177";
-                 int port = 49153;
- 
                  var client = new WeMoService.BasicServicePortTypeClient();
                  client.Endpoint.Address = new EndpointAddress(string.Format("http://{0}:{1}/upnp/control/basicevent1", ip, port));
  
@@ -241,7 +260,10 @@ namespace WemoSwitch.Components.Commands
                  client.SetBinaryState(msg);
  
              }
-             catch (Exception ex) { }
+             catch (Exception ex) 
+             {
+                 WebPage.DisplayWebPage("Wemo Command Error", ex.Message);             
+             }
          }
 
 

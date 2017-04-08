@@ -37,6 +37,9 @@
             // 
             // ExecutablesList
             // 
+            this.ExecutablesList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ExecutablesList.Location = new System.Drawing.Point(12, 230);
             this.ExecutablesList.Name = "ExecutablesList";
             this.ExecutablesList.Size = new System.Drawing.Size(513, 183);
@@ -46,6 +49,8 @@
             // 
             // ScriptCommandList
             // 
+            this.ScriptCommandList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ScriptCommandList.Location = new System.Drawing.Point(12, 12);
             this.ScriptCommandList.Name = "ScriptCommandList";
             this.ScriptCommandList.Size = new System.Drawing.Size(513, 183);
@@ -55,7 +60,8 @@
             // 
             // doneBtn
             // 
-            this.doneBtn.Location = new System.Drawing.Point(234, 469);
+            this.doneBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.doneBtn.Location = new System.Drawing.Point(450, 469);
             this.doneBtn.Name = "doneBtn";
             this.doneBtn.Size = new System.Drawing.Size(75, 23);
             this.doneBtn.TabIndex = 2;
@@ -65,6 +71,7 @@
             // 
             // AddCmdBtn
             // 
+            this.AddCmdBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.AddCmdBtn.Location = new System.Drawing.Point(450, 201);
             this.AddCmdBtn.Name = "AddCmdBtn";
             this.AddCmdBtn.Size = new System.Drawing.Size(75, 23);
@@ -75,6 +82,7 @@
             // 
             // AddExeBtn
             // 
+            this.AddExeBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AddExeBtn.Location = new System.Drawing.Point(450, 419);
             this.AddExeBtn.Name = "AddExeBtn";
             this.AddExeBtn.Size = new System.Drawing.Size(75, 23);

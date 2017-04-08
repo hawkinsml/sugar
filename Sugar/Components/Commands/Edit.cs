@@ -33,6 +33,21 @@ namespace Sugar.Components.Commands
             get { return "<h3>Edit</h3><p>Saves the contents of the clipboard as a temp file (.bmp for images and .txt for text) and opens the file with the defualt editor for the content type.</p>"; }
         }
 
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return null; }
+        }
+
         public bool Execute(string[] args)
         {
             if (Clipboard.ContainsImage())

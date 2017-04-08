@@ -32,8 +32,21 @@ namespace Sugar.Components.Commands
                 return "<h3>Line</h3>" +
                     "<p>Remove all lines that do not contain the matching text.</p>";
             }
+        }
 
-        
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return null; }
         }
 
         public bool Execute(string[] args)

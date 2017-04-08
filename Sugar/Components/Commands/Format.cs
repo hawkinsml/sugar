@@ -10,6 +10,12 @@ namespace Sugar.Components.Commands
 {
     class Format : ICommand
     {
+        string description = "For each line on the clipboard, splits the line by spaces into a string array and passes these array into string.Format(Format String, words).";
+        string[] paramList = new string[]  { "Format String", "Delimiter" };
+        string[] paramDescriptionList = new string[] { "String passed as the Format text to string.Format().", "Split the lines by <b>word</b>, <b>line</b> or <b>tab</b>." };
+        bool[] paramRequired = { true, false };
+
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new Format());
@@ -22,24 +28,29 @@ namespace Sugar.Components.Commands
 
         public string[] ParamList
         {
-            get { return new string[] { "Format String", "Delimiter" }; }
+            get { return paramList; }
+        }
+
+        public string[] ParamDescriptionList
+        {
+            get { return paramDescriptionList; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return paramRequired; }
+        }
+
+        public string Description
+        {
+            get { return description; }
         }
 
         public string Help
         {
-            get
-            {
-                return "<h3>Format</h3>" +
-                    "<p>For each line on the clipboard, splits the line by spaces into a string array and passes these array into string.Format(Format String, words).</p>" +
-                    "<dl>" +
-                    "<dt>Format String <span class='label label-primary'>required</span></dt>" +
-                    "<dd>String passed as the Format text to string.Format().</dd>" +
-                    "<dt>Delimiter <span class='label label-primary'>required</span></dt>" +
-                    "<dd>Split the lines by <b>word</b> or <b>line</b>.</dd>" +
-                    "</dl>";
+            get {               
+                return null; 
             }
-
-        
         }
 
         public bool Execute(string[] args)

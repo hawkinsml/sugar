@@ -32,10 +32,22 @@ namespace Sugar.Components.Commands
                 return "<h3>Base64</h3>" +
                     "<p>Encode or Decode a base64 string</p>";
             }
-
-        
         }
 
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return null; }
+        }
         public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();

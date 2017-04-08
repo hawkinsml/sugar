@@ -27,7 +27,22 @@ namespace Sugar.Components.Commands
 
         public string Help
         {
-            get { return "<h3>Upper</h3><p>Converts the contents of the clipboard to all uppercase.</p>"; }
+            get { return null; }
+        }
+
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return "Converts the contents of the clipboard to all uppercase."; }
         }
 
         public bool Execute(string[] args)
@@ -55,12 +70,27 @@ namespace Sugar.Components.Commands
 
         public string Help
         {
-            get { return "<h3>Lower</h3><p>Converts the contents of the clipboard to all lowercase.</p>"; }
+            get { return null; }
         }
 
         public string[] ParamList
         {
             get { return null; }
+        }
+
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return "Converts the contents of the clipboard to all lowercase."; }
         }
 
         public bool Execute(string[] args)
@@ -93,7 +123,22 @@ namespace Sugar.Components.Commands
 
         public string Help
         {
-            get { return "<h3>Trim</h3><p>Trims spaces from the begining and ending of each line on the clipboard.</p>"; }
+            get { return null; }
+        }
+
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return "Trims spaces from the begining and ending of each line on the clipboard."; }
         }
 
         public bool Execute(string[] args)
@@ -136,7 +181,22 @@ namespace Sugar.Components.Commands
 
         public string Help
         {
-            get { return "<h3>Strip</h3><p>Rempove carriage returns from text.</p>"; }
+            get { return null; }
+        }
+
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return "Rempove carriage returns from text."; }
         }
 
         public bool Execute(string[] args)

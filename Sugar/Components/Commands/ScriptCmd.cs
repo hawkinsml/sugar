@@ -44,6 +44,21 @@ namespace Sugar.Components.Commands
             get { return Cmd.ParamList; }
         }
 
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return null; }
+        }
+
         public string Help
         {
             get { return Cmd.Help; }

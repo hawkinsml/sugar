@@ -45,12 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StringExtension.cs" />
+    <Compile Include="UPNP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\WeMoService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="WebPage.cs" />
     <Compile Include="WeMo.cs" />
   </ItemGroup>
   <ItemGroup>

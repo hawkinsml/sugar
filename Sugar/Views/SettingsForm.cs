@@ -37,7 +37,7 @@ namespace Sugar.Views
 
             SettingsModal data = SettingsManager.LoadSettings();
 
-            foreach (var item in data.Commands)
+            foreach (var item in data.Commands.OrderBy( o => o.Name ) )
             {
                 string[] arr = new string[3];
                 arr[0] = item.Name;
@@ -47,7 +47,7 @@ namespace Sugar.Views
                 ScriptCommandList.Items.Add(itm);
             }
 
-            foreach (var item in data.Executables)
+            foreach (var item in data.Executables.OrderBy(o => o.Name))
             {
                 string[] arr = new string[3];
                 arr[0] = item.Name;

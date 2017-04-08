@@ -32,8 +32,9 @@ namespace Sugar.Components.Commands
         public RunCmd(ExecutableModel exe)
         {
             this.Exe = exe;
-
+            Exe.Path = Exe.Path.Replace("%user%", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
             Exe.Path = Exe.Path.Replace("%windir%", Environment.GetFolderPath(Environment.SpecialFolder.Windows));
+            Exe.Path = Exe.Path.Replace("%Dropbox%", Environment.GetEnvironmentVariable("Dropbox", EnvironmentVariableTarget.User));
         }
 
         public string Name
@@ -42,6 +43,21 @@ namespace Sugar.Components.Commands
         }
 
         public string[] ParamList
+        {
+            get { return null; }
+        }
+
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
         {
             get { return null; }
         }

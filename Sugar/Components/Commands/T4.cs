@@ -27,7 +27,22 @@ namespace Sugar.Components.Commands
 
         public string Help
         {
-            get { return "<h3>T4</h3><p>Build json to define object for T4 templates that build code first.</p>"; }
+            get { return null; }
+        }
+
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return "Build json to define object for T4 templates that build code first."; }
         }
 
         public bool Execute(string[] args)

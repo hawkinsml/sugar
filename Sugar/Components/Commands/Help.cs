@@ -31,12 +31,27 @@ namespace Sugar.Components.Commands
             get { return "<h3>Help</h3><p>Display the help page that list all comamnds.</p>"; }
         }
 
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return null; }
+        }
+
         public bool Execute(string[] args)
         {
             StringBuilder sb = new StringBuilder();
             foreach (var handler in CommandManager.CommandHandlers.OrderBy( o => o.Name) )
             {
-                sb.AppendLine(handler.Help);
+                sb.AppendLine(BuildCommandHelp(handler));
             }
 
             string fileName = Path.GetTempFileName();
@@ -49,6 +64,48 @@ namespace Sugar.Components.Commands
             return true; // hide command window
         }
 
+        private string BuildCommandHelp(ICommand handler)
+        {
+            string retVal = handler.Help;
+            if (retVal == null)
+            {
+                StringBuilder sb = new StringBuilder();
+                int paramCnt = handler.ParamList == null ? 0 : handler.ParamList.Count();
+                if (paramCnt > 0)
+                {
+                    sb.AppendLine("<dl>");
+                    for (int i = 0; i < paramCnt; i++)
+                    {
+                        sb.AppendLine("<dt>");
+                        sb.AppendLine(handler.ParamList[i]);
+                        if (handler.ParamRequired.Count() > i)
+                        {
+                            if (handler.ParamRequired[i] == true)
+                            {
+                                sb.AppendLine(" <span class='label label-primary'>required</span> ");
+                            }
+                            else
+                            {
+                                sb.AppendLine(" <span class='label label-default'>optional</span> ");
+                            }
+                        }
+                        sb.AppendLine("</dt>");
+                        if (handler.ParamDescriptionList.Count() > i)
+                        {
+                            sb.AppendLine(string.Format("<dd>{0}</dd>", handler.ParamDescriptionList[i]));
+                        }
+                        else
+                        {
+                            sb.AppendLine("<dd></dd>");
+                        }
+                    }
+                    sb.AppendLine("</dl>");
+                }
+
+                retVal = string.Format("<h3>{0}</h3><p>{1}</p>\r\n{2}", handler.Name, handler.Description, sb.ToString());
+            }
+            return retVal;
+        }
 
         private string BuildHelpPage(string content)
         {

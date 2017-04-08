@@ -29,6 +29,21 @@ namespace Sugar.Components.Commands
             get { return "<h3>Simplify</h3><p>Converts the contents of the clipboard from formatted text such as HTML or Rich Text into plain text.</p>"; }
         }
 
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return null; }
+        }
+
         public bool Execute(string[] args)
         {
             string type = "Text";

@@ -4,30 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using Sugar.Helpers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.IO;
 
 namespace Sugar.Components.Commands
 {
-    public class AddCommas : ICommand
+    class OpenPassword : ICommand
     {
+        private String SharedSecret { get; set; }
+
         static public void Init(ICommandManager commandManager)
         {
-            commandManager.AddCommandHandler(new AddCommas());
+            commandManager.AddCommandHandler(new OpenPassword());
         }
 
         public string Name
         {
-            get { return "Commas"; }
+            get { return "Open Password"; }
         }
 
         public string[] ParamList
         {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get { return "<h3>Commas</h3><p>Replace line feed and carriage return with a comma.</p>"; }
+            get { return new string[] { "password" }; }
         }
 
         public string[] ParamDescriptionList
@@ -45,28 +46,31 @@ namespace Sugar.Components.Commands
             get { return null; }
         }
 
+        public string Help
+        {
+            get
+            {
+                return "<h3>Open Password</h3>" +
+                    "<p>Set password so sugar can open your password file.</p>" +
+                     "<dl>" +
+                    "<dt>password <span class='label label-default'>required</span></dt>" +
+                    "<dd></dd>" +
+                    "</dl>";
+            }
+        }
+
         public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
-            if (!string.IsNullOrWhiteSpace(text))
+            if (args.Length > 1 )
             {
-                StringBuilder sb = new StringBuilder();
-
-                List<string> lines = text.SplitLines();
-
-                foreach (var line in lines)
-                {
-                    if (sb.Length > 0)
-                    {
-                        sb.Append(", ");
-                    }
-                    sb.Append(line.Trim());
-                }
-
-                Clipboard.SetText(sb.ToString(), TextDataFormat.Text);
+                Passwordfile.SharedSecret = args[1];
             }
-
             return true; // hide command window
         }
+
+
+ 
     }
+
 }

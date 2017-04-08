@@ -40,6 +40,21 @@ namespace Sugar.Components.Commands
             get { return "<h3>Pop</h3><p>Put item at the top of the stack back onto clipboard Use Push command place the contents of the clipboard onto a stack.</p>"; }
         }
 
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return null; }
+        }
+
         public bool Execute(string[] args)
         {
             return commandManager.ExecuteCommand("Push", "pop");

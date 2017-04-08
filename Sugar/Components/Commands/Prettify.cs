@@ -26,6 +26,21 @@ namespace Sugar.Components.Commands
             get { return new string[] { "XML | JSON" }; }
         }
 
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return null; }
+        }
+
         public string Help
         {
             get
@@ -46,7 +61,7 @@ namespace Sugar.Components.Commands
             bool xml = true;
             if (args.Length > 1 && !string.IsNullOrWhiteSpace(args[1]))
             {
-                xml = args[1].StartsWith("j", StringComparison.OrdinalIgnoreCase);
+                xml = !args[1].StartsWith("j", StringComparison.OrdinalIgnoreCase);
             }
             else
             {
@@ -140,6 +155,10 @@ namespace Sugar.Components.Commands
                         sb.Append(ch);
                         if (!quoted)
                             sb.Append(" ");
+                        break;
+                    case '\n':
+                    case '\r':
+                        // remove extra new lines
                         break;
                     default:
                         sb.Append(ch);

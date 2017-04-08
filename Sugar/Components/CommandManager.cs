@@ -20,6 +20,7 @@ namespace Sugar
         {
             CommandHandlers.Clear();
             LoadCommands();
+            CommandHandlers = CommandHandlers.OrderBy(o => o.Name).ToList();
         }
 
         private void LoadCommands()
@@ -62,7 +63,6 @@ namespace Sugar
 
             }
         }
-
 
         public void AddCommandHandler(ICommand handler)
         {

@@ -14,6 +14,21 @@ namespace Sugar
             get;
         }
 
+        string[] ParamDescriptionList
+        {
+            get;
+        }
+
+        bool[] ParamRequired
+        {
+            get;
+        }
+
+        string Description
+        {
+            get;
+        }
+
         string Help
         {
             get;

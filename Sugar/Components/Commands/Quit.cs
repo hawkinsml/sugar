@@ -24,6 +24,21 @@ namespace Sugar.Components.Commands
             get { return "<h3>Quit</h3><p>Quits the application</p>"; }
         }
 
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return null; }
+        }
+
         public string[] ParamList
         {
             get { return null; }

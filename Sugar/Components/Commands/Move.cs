@@ -28,6 +28,21 @@ namespace Sugar.Components.Commands
             get { return null; }
         }
 
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return null; }
+        }
+
         public bool Execute(string[] args)
         {
             EventManager.Instance.FireMoveEvent();

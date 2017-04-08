@@ -118,6 +118,13 @@
   <ItemGroup>
     <Compile Include="Components\Commands\Clear.cs" />
     <Compile Include="Components\Commands\Base64.cs" />
+    <Compile Include="Components\Commands\Password\OpenPassword.cs" />
+    <Compile Include="Components\Commands\Password\AddPassword.cs" />
+    <Compile Include="Components\Commands\Password\Password.cs" />
+    <Compile Include="Components\Commands\Password\Passwordfile.cs" />
+    <Compile Include="Components\Commands\Password\PasswordModals.cs" />
+    <Compile Include="Components\Commands\Sort.cs" />
+    <Compile Include="Components\Commands\Hex.cs" />
     <Compile Include="Components\Commands\Settings.cs" />
     <Compile Include="Components\Commands\Line.cs" />
     <Compile Include="Components\Commands\Prettify.cs" />
@@ -139,6 +146,7 @@
     <Compile Include="Components\EventManager.cs" />
     <Compile Include="Components\Settings\SettingsManager.cs" />
     <Compile Include="Components\Settings\SettingsModal.cs" />
+    <Compile Include="Helpers\CryptoHelper.cs" />
     <Compile Include="Service References\WeMoService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

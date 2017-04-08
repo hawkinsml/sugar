@@ -30,6 +30,21 @@ namespace Sugar.Components.Commands
             get { return "<h3>Clear</h3><p>Clears the contents of the clipbaord</p>"; }
         }
 
+        public string[] ParamDescriptionList
+        {
+            get { return null; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return null; }
+        }
+
+        public string Description
+        {
+            get { return null; }
+        }
+
         public bool Execute(string[] args)
         {
             Clipboard.Clear();

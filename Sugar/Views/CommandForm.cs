@@ -24,11 +24,8 @@ namespace Sugar
     {
         ClipboardViewForm clipboardPreview = new ClipboardViewForm();
         CommandManager cmdHandler = new CommandManager();
-        WebForm webForm = new WebForm();
-
         CommandManager commandManager = new CommandManager();
 
-        //SuggestedForm suggestedList = new SuggestedForm();
 
         List<ICommand> suggestedList = null;
         int suggestIndex = 0;
@@ -267,7 +264,6 @@ namespace Sugar
         internal void HotKeyPressed()
         {
             ShowCommandWindow();
-
         }
 
         internal void AutoHotKeyPressed()
@@ -294,12 +290,17 @@ namespace Sugar
         {
             if (this.Visible == true)
             {
-                // 'Steal' the focus.
-                this.Activate();
-                CommandText = "";
-                commandTextBox.Focus();
+                TakeFocus();
             }
             Console.WriteLine("CommandForm_VisibleChanged");
+        }
+
+        private void TakeFocus()
+        {
+            // 'Steal' the focus.
+            this.Activate();
+            CommandText = "";
+            commandTextBox.Focus();
         }
 
         private void ProcessCommand()
@@ -321,78 +322,111 @@ namespace Sugar
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (keyData == Keys.Tab)
-            {
-                if (CommandText.Length < suggestedCommand.Length)
-                {
-                    CommandText = suggestedCommand;
-                }
-                else
-                {
-                    CommandText = CommandText + " ▶ ";
-                }
-            }
-            else if (keyData == Keys.PageDown)
-            {
-                webForm.Show();
-            }
-            else if (keyData == Keys.PageUp)
-            {
-                webForm.Hide();
-            }
-
+            HandleKey(keyData, 1);
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private void CommandForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
+            if (HandleKey(e.KeyCode, 2))
             {
-                HideCommandWindow();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
             }
         }
 
         private void commandTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (HandleKey(e.KeyCode, 3))
             {
-                ProcessCommand();
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
-            else if (e.KeyCode == Keys.Delete)
+        }
+
+        private bool HandleKey(Keys key, int calledFrom )
+        {
+            bool retVal = false;
+            switch (key)
             {
-                CommandText = "";
-            }
-            else if (e.KeyCode == Keys.Escape)
-            {
-                HideCommandWindow();
-                e.Handled = true;
-                e.SuppressKeyPress = true;
-            }
-            else if (e.KeyCode == Keys.Down)
-            {
-                if (suggestIndex < suggestedList.Count - 1)
+                case Keys.Tab:
                 {
-                    suggestIndex++;
-                    suggestedCommand = suggestedList[suggestIndex].Name;
-                    suggestedLabel.Text = suggestedCommand;
+                    string[] command = CommandText.Split('▶');
+                    if (command.Length == 1 && string.Compare(CommandText, suggestedCommand, true) != 0 )
+                    {
+                        CommandText = suggestedCommand;
+                    }
+                    else
+                    {
+                        CommandText = CommandText + " ▶ ";
+                    }
+                    break;
+                }
+                case Keys.PageDown:
+                {
+                    //webForm.Show();
+                    clipboardPreview.ShowForm();
+                    break;
+                }
+                case Keys.PageUp:
+                {
+                    //webForm.Hide();
+                    clipboardPreview.Hide();
+                    break;
+                }
+                case Keys.Escape:
+                {
+                    HideCommandWindow();
+                    retVal = true;
+                    break;
+                }
+
+                case Keys.Enter:
+                {
+                    ProcessCommand();
+                    retVal = true;
+                    break;
+                }
+                case Keys.Delete:
+                {
+                    CommandText = "";
+                    break;
+                }
+                case Keys.Down:
+                {
+                    if (calledFrom == 1)
+                    {
+                        if (suggestIndex < suggestedList.Count - 1)
+                        {
+                            suggestIndex++;
+                            suggestedCommand = suggestedList[suggestIndex].Name;
+                            suggestedLabel.Text = suggestedCommand;
+                        }
+                    }
+                    break;
+                }
+                case Keys.Up:
+                {
+                    if (calledFrom == 1)
+                    {
+                        if (suggestIndex > 0)
+                        {
+                            suggestIndex--;
+                            suggestedCommand = suggestedList[suggestIndex].Name;
+                            suggestedLabel.Text = suggestedCommand;
+                        }
+                    }
+                    break;
                 }
             }
-            else if (e.KeyCode == Keys.Up)
-            {
-                if (suggestIndex > 0)
-                {
-                    suggestIndex--;
-                    suggestedCommand = suggestedList[suggestIndex].Name;
-                    suggestedLabel.Text = suggestedCommand;
-                }
-            }
+            
+            return retVal;
         }
 
         private void commandTextBox_TextChanged(object sender, EventArgs e)
         {
             string[] command = CommandText.Split('▶');
+            suggestedLabel.ForeColor = System.Drawing.Color.DarkGray;
             if (command.Length > 0)
             {
                 suggestIndex = 0;
@@ -404,19 +438,22 @@ namespace Sugar
                     if (paramIndex >= 0 && suggestedList[0].ParamList != null && suggestedList[0].ParamList.Length > paramIndex)
                     {
                         suggestedCommand = suggestedList[0].ParamList[paramIndex];
+                        if (suggestedList[0].ParamRequired != null && suggestedList[0].ParamRequired.Count() > paramIndex)
+                        {
+                            if (suggestedList[0].ParamRequired[paramIndex] == true)
+                            {
+                                suggestedLabel.ForeColor = System.Drawing.Color.DarkRed;
+                            }
+                        }
                     }
                     else
                     {
                         suggestedCommand = suggestedList[0].Name;
                     }
-                    //suggestedList.SetSuggestions(list);
-                    //suggestedList.Location = new Point(this.Location.X + 17, this.Location.Y + 100);
-                    //suggestedList.Show();
                 }
                 else
                 {
                     suggestedCommand = "";
-                    //suggestedList.Hide();
                 }
             }
             suggestedLabel.Text = suggestedCommand;

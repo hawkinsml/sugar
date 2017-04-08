@@ -91,18 +91,21 @@ namespace Sugar
         private void DisplayImage()
         {
             Image clipboardImage = Clipboard.GetImage();
-            Size imageSize = clipboardImage.Size;
+            if (clipboardImage != null)
+            {
+                Size imageSize = clipboardImage.Size;
 
-            clipboardImage = ResizeImage(clipboardImage, this.Size.Width, this.Size.Height);
+                clipboardImage = ResizeImage(clipboardImage, this.Size.Width, this.Size.Height);
 
 
-            //this.Size = new Size(200, 200);
-            //setDlgPosition();
-            string imagePath = Path.GetTempFileName();
-            imagePath = Path.ChangeExtension(imagePath, ".bmp");
-            clipboardImage.Save(imagePath);
-            pictureBox.ImageLocation = imagePath;
-            pictureBox.Visible = true;
+                //this.Size = new Size(200, 200);
+                //setDlgPosition();
+                string imagePath = Path.GetTempFileName();
+                imagePath = Path.ChangeExtension(imagePath, ".bmp");
+                clipboardImage.Save(imagePath);
+                pictureBox.ImageLocation = imagePath;
+                pictureBox.Visible = true;
+            }
         }
 
         public static Image resizeImage(Image imgToResize, Size size)

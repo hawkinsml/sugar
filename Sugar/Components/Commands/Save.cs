@@ -27,9 +27,24 @@ namespace Sugar.Components.Commands
             get { return new string[] { "File Name" }; } 
         }
 
+        public string[] ParamDescriptionList
+        {
+            get { return new string[] { "File name to use when creating Excel file. If file name is not provide, a temp file name will be created." }; }
+        }
+
+        public bool[] ParamRequired
+        {
+            get { return new bool[] {false}; }
+        }
+
+        public string Description
+        {
+            get { return "Saves the contents of the clipboard to a file"; }
+        }
+
         public string Help
         {
-            get { return "<h3>Save</h3><p>Saves the contents of the clipboard to a file</p><dl><dt>File Name <span class='label label-default'>optional</span></dt><dd>File name to use when creating Excel file. If file name is not provide, a temp file name will be created.</dd></dl>"; }
+            get { return null; }
         }
 
         public bool Execute(string[] args)
