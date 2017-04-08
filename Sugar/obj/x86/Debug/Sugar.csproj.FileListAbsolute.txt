@@ -74,9 +74,6 @@ D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\HTMLResources\libs\bootstrap\fonts\glyphicons-halflings-regular.woff2
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\Sugar.exe
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\Sugar.pdb
-D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\CefSharp.Core.dll
-D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\CefSharp.dll
-D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\CefSharp.WinForms.dll
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\CSScriptLibrary.dll
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\EPPlus.dll
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\Microsoft.CodeAnalysis.CSharp.dll
@@ -88,13 +85,9 @@ D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\System.IO.FileSystem.Primitives.dll
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\System.Reflection.Metadata.dll
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\SugarCommandInterfaces.pdb
-D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\CefSharp.WinForms.xml
-D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\CefSharp.xml
-D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\CefSharp.Core.xml
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\CSScriptLibrary.xml
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\EPPlus.xml
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\Newtonsoft.Json.xml
-D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.csprojResolveAssemblyReference.cache
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.Views.AddExecutableForm.resources
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.ClipboardViewForm.resources
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.CommandForm.resources
@@ -102,7 +95,6 @@ D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.Views.AddScriptCmdForm.resources
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.Views.SettingsForm.resources
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.Views.SuggestedForm.resources
-D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.Views.WebForm.resources
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.csproj.GenerateResource.Cache
 C:\Users\mhawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\Sugar.exe.config
 C:\Users\mhawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.exe
@@ -159,3 +151,5 @@ C:\Users\mhawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debu
 C:\Users\mhawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.Views.SuggestedForm.resources
 C:\Users\mhawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.Views.WebForm.resources
 C:\Users\mhawkins\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\x86\Debug\Sugar.csproj.GenerateResource.Cache
+D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\x86\Debug\Microsoft.CodeAnalysis.Scripting.dll

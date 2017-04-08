@@ -10,7 +10,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CefSharp;
 using CSScriptLibrary;
 using Microsoft.Win32;
 using Sugar.Components;
@@ -222,7 +221,6 @@ namespace Sugar
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Cef.Initialize();
             this.TopMost = true;
             this.Visible = false;
             this.WindowState = FormWindowState.Normal;
@@ -236,7 +234,6 @@ namespace Sugar
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Cef.Shutdown();
             // Remove ourselves from OS clipboard notifications
             ChangeClipboardChain(Handle, _nextClipboardViewer);
             HotKeysManager.Instance.ReleaseHotKeys();

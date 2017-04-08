@@ -49,6 +49,11 @@ namespace Sugar
         private void LoadPluginAssemblies()
         {
             string pluginPath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Plugins");
+            if ( !Directory.Exists(pluginPath) )
+            {
+                Directory.CreateDirectory(pluginPath);
+            }
+
 
             foreach (string dll in Directory.GetFiles(pluginPath, "*.dll", SearchOption.AllDirectories))
             {
