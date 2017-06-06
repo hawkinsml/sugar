@@ -14,6 +14,7 @@ using CSScriptLibrary;
 using Microsoft.Win32;
 using Sugar.Components;
 using Sugar.Components.Commands;
+using Sugar.Components.Settings;
 using Sugar.Helpers;
 using Sugar.Views;
 
@@ -25,6 +26,8 @@ namespace Sugar
         CommandManager cmdHandler = new CommandManager();
         CommandManager commandManager = new CommandManager();
 
+        CommandHistoryModel history = new CommandHistoryModel();
+        private int historyIndex = 0;
 
         List<ICommand> suggestedList = null;
         int suggestIndex = 0;
@@ -152,6 +155,8 @@ namespace Sugar
             SetForStartUp();
 
             commandManager.InitCommands();
+            history = commandManager.LoadCommandHistory();
+            historyIndex = history.CommandHistory.Count;
 
             EventManager.Instance.HideEvent += Instance_hideEvent;
             EventManager.Instance.ShowEvent += Instance_ShowEvent;
@@ -302,6 +307,10 @@ namespace Sugar
 
         private void ProcessCommand()
         {
+            //Save the command in history.
+            history = commandManager.SaveCommandHistory(CommandText);
+            historyIndex = history.CommandHistory.Count;
+
             List<string> command = new List<string>();
             List<string> tmp = CommandText.Split('▶').ToList<string>();
             foreach (var item in tmp)
@@ -314,6 +323,7 @@ namespace Sugar
             {
                 commandManager.ExecuteCommand(suggestedCommand, command.ToArray());
             }
+
             commandTextBox.Focus();
         }
 
@@ -387,6 +397,36 @@ namespace Sugar
                 case Keys.Delete:
                 {
                     CommandText = "";
+                    break;
+                }
+                case Keys.Home:
+                {
+                    if (calledFrom == 1)
+                    {
+                        historyIndex--;
+
+                        if (historyIndex < 0)
+                        {
+                            historyIndex = history.CommandHistory.Count - 1;
+                        }
+
+                        CommandText = history.CommandHistory[historyIndex];
+                    }
+                    break;
+                }
+                case Keys.End:
+                {
+                    if (calledFrom == 1)
+                    {
+                        historyIndex++;
+
+                        if (historyIndex >= history.CommandHistory.Count)
+                        {
+                            historyIndex = 0;
+                        }
+
+                        CommandText = history.CommandHistory[historyIndex];
+                    }
                     break;
                 }
                 case Keys.Down:
