@@ -33,4 +33,9 @@ namespace Sugar.Components.Settings
         public string Path { get; set; }
         public string Arguments  { get; set; }
     }
+
+    public class CommandHistoryModel
+    {
+        public List<string> CommandHistory { get; set; }
+    }
 }

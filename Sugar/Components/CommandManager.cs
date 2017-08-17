@@ -8,7 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CSScriptLibrary;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Sugar.Components.Commands;
+using Sugar.Components.Settings;
+using Sugar.Helpers;
 
 namespace Sugar
 {
@@ -116,5 +120,67 @@ namespace Sugar
             }
             return retVal;
         }
+
+        public CommandHistoryModel SaveCommandHistory(string command)
+        {
+            CommandHistoryModel history = LoadCommandHistory();
+
+            if (history == null)
+            {
+                history = new CommandHistoryModel();
+                history.CommandHistory = new List<string>();
+            }
+
+            if (!string.IsNullOrEmpty(command) && !history.CommandHistory.Contains(command))
+            {
+                history.CommandHistory.Add(command);
+            }
+
+            if (history.CommandHistory.Count >= 10)
+            {
+                history.CommandHistory = history.CommandHistory.Skip(Math.Max(0, history.CommandHistory.Count() - 10)).ToList();
+            }
+
+            SaveCommandHistory(history);
+            return history;
+        }
+
+        private void SaveCommandHistory(CommandHistoryModel data)
+        {
+            string json = JsonConvert.SerializeObject(data, new IsoDateTimeConverter());
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string fullFileName = string.Format( "{0}\\{1}", path, "sugarHistory.json");
+
+            json.SaveAsTextFile(fullFileName);
+        }
+
+        public CommandHistoryModel LoadCommandHistory()
+        {
+            CommandHistoryModel retVal = null;
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string fullFileName = string.Format("{0}\\{1}", path, "sugarHistory.json");
+
+            try
+            {   
+                String json = "";
+                using (StreamReader sr = new StreamReader(fullFileName))
+                {
+                    json = sr.ReadToEnd();
+                }
+
+                retVal = JsonConvert.DeserializeObject<CommandHistoryModel>(json);
+            }
+            catch (Exception e)
+            {
+                retVal = new CommandHistoryModel();
+                retVal.CommandHistory = new List<string>();
+
+                SaveCommandHistory(retVal);
+            }
+
+            return retVal;
+        }
+
+
     }
 }
