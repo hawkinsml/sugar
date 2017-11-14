@@ -88,12 +88,20 @@ namespace Sugar.Components.Commands
                     {
                         if (delimiter == "word")
                         {
-                            string[] words = line.Trim().Split(' ');
+                            string[] words = line.Split(' ');
+                            for (int i = 0; i < words.Length; i++)
+                            {
+                                words[i] = words[i].Trim();
+                            }
                             sb.AppendLine(string.Format(formatText, words));
                         }
                         else if (delimiter == "tab")
                         {
-                            string[] words = line.Trim().Split('\t');
+                            string[] words = line.Split('\t');
+                            for (int i = 0; i < words.Length; i++)
+                            {
+                                words[i] = words[i].Trim();
+                            }
                             sb.AppendLine(string.Format(formatText, words));
                         }
                         else if (delimiter == "line")
