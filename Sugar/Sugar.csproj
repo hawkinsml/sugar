@@ -147,6 +147,7 @@
     <Compile Include="Components\Settings\SettingsManager.cs" />
     <Compile Include="Components\Settings\SettingsModal.cs" />
     <Compile Include="Helpers\CryptoHelper.cs" />
+    <Compile Include="Helpers\WebPage.cs" />
     <Compile Include="Service References\WeMoService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

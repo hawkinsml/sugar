@@ -11,7 +11,7 @@ namespace Sugar.Components.Commands
     class Format : ICommand
     {
         string description = "For each line on the clipboard, splits the line by spaces into a string array and passes these array into string.Format(Format String, words).";
-        string[] paramList = new string[]  { "Format String", "Delimiter" };
+        string[] paramList = new string[]  { "Format String", "Delimiter (word, tab, line)" };
         string[] paramDescriptionList = new string[] { "String passed as the Format text to string.Format().", "Split the lines by <b>word</b>, <b>line</b> or <b>tab</b>." };
         bool[] paramRequired = { true, false };
 
@@ -82,6 +82,8 @@ namespace Sugar.Components.Commands
 
                 List<string> lines = text.SplitLines();
 
+                StringBuilder errorText = new StringBuilder();
+
                 foreach (var line in lines)
                 {
                     try
@@ -93,7 +95,11 @@ namespace Sugar.Components.Commands
                         }
                         else if (delimiter == "tab")
                         {
-                            string[] words = line.Trim().Split('\t');
+                            string[] words = line.Split('\t');
+                            for (int i = 0; i < words.Length; i++)
+                            {
+                                words[i] = words[i].Trim();
+                            }
                             sb.AppendLine(string.Format(formatText, words));
                         }
                         else if (delimiter == "line")
@@ -101,8 +107,15 @@ namespace Sugar.Components.Commands
                             sb.AppendLine(string.Format(formatText, line));
                         }
                     }
-                    catch( Exception) {}
+                    catch( Exception e)
+                    {
+                        errorText.AppendHtmlLine(e.Message);
+                    }
+                }
 
+                if (errorText.Length > 0)
+                {
+                    WebPage.DisplayWebPage("Format Command Error", formatText + "<hr/>" + errorText.ToString());
                 }
 
                 try

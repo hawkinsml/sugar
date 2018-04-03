@@ -27,7 +27,7 @@ namespace Sugar.Components.Commands
 
         public string[] ParamDescriptionList
         {
-            get { return new string[] { "decimal value(s) to convert. If not provide, then contents of clipboard is convert." }; }
+            get { return new string[] { "decimal value(s) to convert. If not provided, then contents of clipboard is convert." }; }
         }
 
         public bool[] ParamRequired
