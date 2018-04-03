@@ -1,7 +1,7 @@
 # sugar
 Sweet keystroke launcher app with helpful commands 
 
-Pressing <Alt><space> key will open Sugar command window  
+Pressing &lt;Alt&gt;&lt;Space&gt; key will open Sugar command window  
   
 
 Base64  
