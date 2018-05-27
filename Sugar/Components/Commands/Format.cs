@@ -90,7 +90,8 @@ namespace Sugar.Components.Commands
                     {
                         if (delimiter == "word")
                         {
-                            string[] words = line.Split(' ');
+                            string cleanline = line.Trim();
+                            string[] words = cleanline.Split(' ');
                             for (int i = 0; i < words.Length; i++)
                             {
                                 words[i] = words[i].Trim();
@@ -113,7 +114,8 @@ namespace Sugar.Components.Commands
                     }
                     catch( Exception e)
                     {
-                        errorText.AppendHtmlLine(e.Message);
+                        string errorMessage = $"Format failed this line '{line}' for delimiter {delimiter} and format string {formatText} with error '{e.Message}'";
+                        errorText.AppendHtmlLine(errorMessage);
                     }
                 }
 
