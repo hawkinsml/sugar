@@ -139,5 +139,95 @@ namespace Sugar.Components.Commands
             return true; // hide command window
         }
     }
-    
+
+    public class Escape : BaseCommand
+    {
+        public Escape()
+        {
+            Name = "Escape";
+            ParamList = null;
+            Help = null;
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = "Escape a string to be put inside another string. Adds backslashing to double quotes.";
+        }
+
+        static public void Init(ICommandManager commandManager)
+        {
+            commandManager.AddCommandHandler(new Escape());
+        }
+
+        override public bool Execute(string[] args)
+        {
+            string text = Clipboard.GetText();
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                bool decode = false;
+
+                if (args.Length > 1 && !string.IsNullOrWhiteSpace(args[1]))
+                {
+                    decode = args[1].ToLower().StartsWith("d");
+                }
+
+                StringBuilder sb = new StringBuilder();
+                if (decode)
+                {
+                    for (int i = 0; i < text.Length; i++ )
+                    {
+                        switch( text[i] )
+                        {
+                            case '\\':
+                                if ( i+1 < text.Length )
+                                {
+                                    switch(text[i+1])
+                                    {
+                                        case '"':
+                                            sb.Append('"');
+                                            i++;
+                                            break;
+                                        case 'n':
+                                            sb.AppendLine();
+                                            i++;
+                                            break;
+                                    }
+                                }
+                                else
+                                {
+                                    sb.Append(text[i]);
+                                }
+                                break;
+                            default:
+                                sb.Append(text[i]);
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < text.Length; i++)
+                    {
+                        switch (text[i])
+                        {
+                            case '"':
+                                sb.Append('\\');
+                                sb.Append('"');
+                                break;
+                            case '\n':
+                                sb.Append('\\');
+                                sb.Append('n');
+                                break;
+                            default:
+                                sb.Append(text[i]);
+                                break;
+                        }
+                    }
+                }
+
+
+                Clipboard.SetText(sb.ToString(), TextDataFormat.Text);
+            }
+            return true; // hide command window
+        }
+    }
+
 }
