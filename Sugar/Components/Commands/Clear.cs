@@ -8,44 +8,24 @@ using Sugar.Components.Settings;
 
 namespace Sugar.Components.Commands
 {
-    class Clear : ICommand
+    class Clear : BaseCommand
     {
+        public Clear()
+        {
+            Name = "Clear";
+            ParamList = null;
+            Help = "<h3>Clear</h3><p>Clears the contents of the clipbaord</p>";
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new Clear());
         }
 
-        public string Name
-        {
-            get { return "Clear"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get { return "<h3>Clear</h3><p>Clears the contents of the clipbaord</p>"; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             Clipboard.Clear();
             return true; // hide command window

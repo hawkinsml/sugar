@@ -6,44 +6,24 @@ using System.Threading.Tasks;
 
 namespace Sugar.Components.Commands
 {
-    class Hide : ICommand
+    class Hide : BaseCommand
     {
+        public Hide()
+        {
+            Name = "Hide";
+            Help = "<h3>Hide</h3><p>Hides the command prompt. Same as pressing <kbd>esc</kbd> key.</p>";
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+            ParamList = null;
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new Hide());
         }
 
-        public string Name
-        {
-            get { return "Hide"; }
-        }
-
-        public string Help
-        {
-            get { return "<h3>Hide</h3><p>Hides the command prompt. Same as pressing <kbd>esc</kbd> key.</p>"; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-
-        public string[] ParamList
-        {
-            get { return null; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             EventManager.Instance.FireHideEvent();
             return true; // hide command window

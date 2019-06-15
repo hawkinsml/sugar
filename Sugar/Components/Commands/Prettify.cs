@@ -9,52 +9,29 @@ using Sugar.Helpers;
 
 namespace Sugar.Components.Commands
 {
-    class Prettify : ICommand
+    class Prettify : BaseCommand
     {
-        static public void Init(ICommandManager commandManager)
+        public Prettify()
         {
-            commandManager.AddCommandHandler(new Prettify());
-        }
-
-        public string Name
-        {
-            get { return "Prettify"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return new string[] { "XML | JSON" }; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get
-            {
-                return "<h3>Prettify</h3>" +
+            Name = "Prettify";
+            ParamList = new string[] { "XML | JSON" };
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+            Help = "<h3>Prettify</h3>" +
                     "<p>Format XML or JSON string to multiply lines and nice indents.</p>" +
                      "<dl>" +
                     "<dt>XML | JSON <span class='label label-default'>optional</span></dt>" +
                     "<dd>Tell prettify if the text is xml or json. Prettify will assume XML if the text starts with \"&lt;\"</dd>" +
                     "</dl>";
-            }
         }
 
-        public bool Execute(string[] args)
+        static public void Init(ICommandManager commandManager)
+        {
+            commandManager.AddCommandHandler(new Prettify());
+        }
+
+        override public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
 

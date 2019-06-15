@@ -8,52 +8,23 @@ using Sugar.Helpers;
 
 namespace Sugar.Components.Commands
 {
-    class Format : ICommand
+    class Format : BaseCommand
     {
-        string description = "For each line on the clipboard, splits the line by spaces into a string array and passes these array into string.Format(Format String, words).";
-        string[] paramList = new string[]  { "Format String", "Delimiter (word, tab, line)" };
-        string[] paramDescriptionList = new string[] { "String passed as the Format text to string.Format().", "Split the lines by <b>word</b>, <b>line</b> or <b>tab</b>." };
-        bool[] paramRequired = { true, false };
-
+        public Format()
+        {
+            Name = "Format";
+            ParamList = new string[] { "Format String", "Delimiter (word, tab, line)" };
+            ParamDescriptionList = new string[] { "String passed as the Format text to string.Format().", "Split the lines by <b>word</b>, <b>line</b> or <b>tab</b>." };
+            ParamRequired = new bool[] { true, false };
+            Description = "For each line on the clipboard, splits the line by spaces into a string array and passes these array into string.Format(Format String, words).";
+        }
 
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new Format());
         }
 
-        public string Name
-        {
-            get { return "Format"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return paramList; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return paramDescriptionList; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return paramRequired; }
-        }
-
-        public string Description
-        {
-            get { return description; }
-        }
-
-        public string Help
-        {
-            get {               
-                return null; 
-            }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
             string formatText = "";

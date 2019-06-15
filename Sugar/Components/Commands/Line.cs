@@ -8,48 +8,25 @@ using Sugar.Helpers;
 
 namespace Sugar.Components.Commands
 {
-    class Line : ICommand
+    class Line : BaseCommand
     {
+        public Line()
+        {
+            Name = "Line";
+            ParamList = new string[] { "Match Text" };
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+            Help = "<h3>Line</h3>" +
+                    "<p>Remove all lines that do not contain the matching text.</p>";
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new Line());
         }
 
-        public string Name
-        {
-            get { return "Line"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return new string[] { "Match Text" }; }
-        }
-
-        public string Help
-        {
-            get
-            {
-                return "<h3>Line</h3>" +
-                    "<p>Remove all lines that do not contain the matching text.</p>";
-            }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
             string matchText = "";

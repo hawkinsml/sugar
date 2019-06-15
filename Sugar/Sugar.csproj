@@ -62,10 +62,6 @@
       <HintPath>..\packages\EPPlus.4.0.5\lib\net20\EPPlus.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Interop.UPNPLib">
-      <HintPath>..\packages\Interop.UPNPLib.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Microsoft.CodeAnalysis, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CS-Script.bin.3.10.0.0\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
       <Private>True</Private>
@@ -116,6 +112,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\Commands\BaseCommand.cs" />
+    <Compile Include="Components\Commands\Guid.cs" />
     <Compile Include="Components\Commands\Clear.cs" />
     <Compile Include="Components\Commands\Base64.cs" />
     <Compile Include="Components\Commands\Password\OpenPassword.cs" />
@@ -148,11 +146,6 @@
     <Compile Include="Components\Settings\SettingsModal.cs" />
     <Compile Include="Helpers\CryptoHelper.cs" />
     <Compile Include="Helpers\WebPage.cs" />
-    <Compile Include="Service References\WeMoService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Views\AddExecutableForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,8 +172,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Components\Hotkey.cs" />
-    <Compile Include="Components\HotKeysManager.cs" />
-    <Compile Include="Components\KeyboardHook.cs" />
     <Compile Include="Helpers\ControlExtension.cs" />
     <Compile Include="Helpers\StringExtension.cs" />
     <Compile Include="Program.cs" />
@@ -241,57 +232,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Service References\WeMoService\BasicService.wsdl">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.ChangeFriendlyNameResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.ChangeFriendlyNameResponse1.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.GetBinaryStateResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.GetBinaryStateResponse1.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.GetFriendlyNameResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.GetFriendlyNameResponse1.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.GetHomeIdResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.GetHomeIdResponse1.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.GetIconURLResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.GetIconURLResponse1.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.GetLogFileURLResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.GetLogFileURLResponse1.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.GetSignalStrengthResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.GetSignalStrengthResponse1.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.SetBinaryStateResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\WeMoService\Sugar.WeMoService.SetBinaryStateResponse1.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -301,18 +241,7 @@
     <None Include="commandwindow.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\WeMoService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\WeMoService\configuration.svcinfo" />
-    <None Include="Service References\WeMoService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\WeMoService\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SugarCommandInterfaces\SugarCommandInterfaces.csproj">

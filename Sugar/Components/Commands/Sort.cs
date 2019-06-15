@@ -8,52 +8,25 @@ using Sugar.Helpers;
 
 namespace Sugar.Components.Commands
 {
-    class Sort : ICommand
+    class Sort : BaseCommand
     {
-        string description = "Sort the contents of the clipboard by the text of each line.";
-        string[] paramList = new string[]  { "Asc | Desc" };
-        string[] paramDescriptionList = new string[] { "sort ascending or descending. Defaults to ascending." };
-        bool[] paramRequired = { true, false };
+        public Sort()
+        {
+            Name = "Sort";
+            ParamList = new string[] { "Asc | Desc" };
+            ParamDescriptionList = new string[] { "sort ascending or descending. Defaults to ascending." };
+            ParamRequired = new bool[] { true, false };
+            Description = "Sort the contents of the clipboard by the text of each line.";
+            Help = null;
 
+        }
 
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new Sort());
         }
 
-        public string Name
-        {
-            get { return "Sort"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return paramList; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return paramDescriptionList; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return paramRequired; }
-        }
-
-        public string Description
-        {
-            get { return description; }
-        }
-
-        public string Help
-        {
-            get {               
-                return null; 
-            }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
             bool ascending = true;

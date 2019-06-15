@@ -9,44 +9,24 @@ using Sugar.Helpers;
 
 namespace Sugar.Components.Commands
 {
-    class HelpCmd : ICommand
+    class HelpCmd : BaseCommand
     {
+        public HelpCmd()
+        {
+            Name = "Help";
+            ParamList = null;
+            Help = "<h3>Help</h3><p>Display the help page that list all comamnds.</p>";
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new HelpCmd());
         }
 
-        public string Name
-        {
-            get { return "Help"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get { return "<h3>Help</h3><p>Display the help page that list all comamnds.</p>"; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             StringBuilder sb = new StringBuilder();
             foreach (var handler in CommandManager.CommandHandlers.OrderBy( o => o.Name) )

@@ -12,65 +12,42 @@ using System.IO;
 
 namespace Sugar.Components.Commands
 {
-    class OpenPassword : ICommand
+    class OpenPassword : BaseCommand
     {
         private String SharedSecret { get; set; }
+
+        public OpenPassword()
+        {
+            Name = "Open Password";
+            ParamList = new string[] { "password" };
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+            Help = "<h3>Open Password</h3>" +
+                    "<p>Set password so sugar can open your password file.</p>" +
+                     "<dl>" +
+                    "<dt>password <span class='label label-default'>required</span></dt>" +
+                    "<dd></dd>" +
+                    "</dl>";
+        }
 
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new OpenPassword());
         }
 
-        public string Name
-        {
-            get { return "Open Password"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return new string[] { "password" }; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get
-            {
-                return "<h3>Open Password</h3>" +
-                    "<p>Set password so sugar can open your password file.</p>" +
-                     "<dl>" +
-                    "<dt>password <span class='label label-default'>required</span></dt>" +
-                    "<dd></dd>" +
-                    "</dl>";
-            }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
             if (args.Length > 1 )
             {
                 Passwordfile.SharedSecret = args[1];
             }
+            else
+            {
+                Passwordfile.SharedSecret = text;
+            }
             return true; // hide command window
         }
-
-
- 
     }
-
 }

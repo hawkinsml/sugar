@@ -7,44 +7,26 @@ using System.Windows.Forms;
 
 namespace Sugar.Components.Commands
 {
-    class Simplify : ICommand
+    class Simplify : BaseCommand
+
     {
+        public Simplify()
+        {
+            Name = "Simplify";
+            ParamList = null;
+            Help = "<h3>Simplify</h3><p>Converts the contents of the clipboard from formatted text such as HTML or Rich Text into plain text.</p>";
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new Simplify());
         }
 
-        public string Name
-        {
-            get { return "Simplify"; }
-        }
 
-        public string[] ParamList
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get { return "<h3>Simplify</h3><p>Converts the contents of the clipboard from formatted text such as HTML or Rich Text into plain text.</p>"; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             string type = "Text";
             if (args.Length > 1 && !string.IsNullOrWhiteSpace(args[1]))

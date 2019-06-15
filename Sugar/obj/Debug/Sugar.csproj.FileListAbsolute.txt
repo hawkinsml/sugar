@@ -73,8 +73,6 @@ D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sug
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.pdb
 D:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.csprojResolveAssemblyReference.cache
 F:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\Debug\Sugar.exe.config
-F:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.exe
-F:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.pdb
 F:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\Debug\Sugar.exe
 F:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\Debug\Sugar.pdb
 F:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\bin\Debug\CSScriptLibrary.dll
@@ -102,3 +100,5 @@ F:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sug
 F:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.Views.SettingsForm.resources
 F:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.Views.SuggestedForm.resources
 F:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.csproj.GenerateResource.Cache
+F:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.exe
+F:\Users\michael\Dropbox\Development\Personal\Projects\Sugar\Sugar\obj\Debug\Sugar.pdb

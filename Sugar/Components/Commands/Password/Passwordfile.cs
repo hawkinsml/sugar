@@ -15,7 +15,7 @@ namespace Sugar.Components.Commands
     {
         public static String SharedSecret { get; set; }
 
-        public static bool SaveFile(PasswordsModal data)
+        public static bool SaveFile(PasswordsModel data)
         {
             bool retVal = false;
 
@@ -29,9 +29,9 @@ namespace Sugar.Components.Commands
             return retVal;
         }
 
-        public static PasswordsModal ReadFile()
+        public static PasswordsModel ReadFile()
         {
-            PasswordsModal retVal = null;
+            PasswordsModel retVal = null;
             string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             string fullFileName = string.Format("{0}\\{1}", path, "sugar.data");
 
@@ -45,7 +45,7 @@ namespace Sugar.Components.Commands
                     json = CryptoHelper.DecryptStringAES(encryptedData, SharedSecret);
                 }
 
-                retVal = JsonConvert.DeserializeObject<PasswordsModal>(json);
+                retVal = JsonConvert.DeserializeObject<PasswordsModel>(json);
             }
             catch (Exception e)
             {

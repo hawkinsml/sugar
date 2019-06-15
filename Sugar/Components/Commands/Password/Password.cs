@@ -12,83 +12,64 @@ using System.IO;
 
 namespace Sugar.Components.Commands
 {
-    class Password : ICommand
+    class Password : BaseCommand
     {
+
+        public Password()
+        {
+            Name = "pw";
+            ParamList = new string[] { "site name" };
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+            Help = "<h3>pw (Password)</h3>" +
+                    "<p>Places a password on the clipboard for a given account.</p>" +
+                     "<dl>" +
+                    "<dt>Site or Account <span class='label label-default'>required</span></dt>" +
+                    "<dd>url or other text that matches the account for the password.</dd>" +
+                    "</dl>";
+        }
 
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new Password());
         }
 
-        public string Name
+        override public bool Execute(string[] args)
         {
-            get { return "pw"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return new string[] { "site name" }; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get
+            if (string.IsNullOrWhiteSpace(Passwordfile.SharedSecret))
             {
-                return "<h3>pw (Password)</h3>" +
-                    "<p>Places a password on the clipboard for a given account.</p>" +
-                     "<dl>" +
-                    "<dt>Site or Account <span class='label label-default'>required</span></dt>" +
-                    "<dd>url or other text that matches the account for the password.</dd>" +
-                    "</dl>";
-            }
-        }
-
-        public bool Execute(string[] args)
-        {
-            string text = Clipboard.GetText();
-
-            bool xml = true;
-            if (args.Length > 1 && !string.IsNullOrWhiteSpace(args[1]))
-            {
-                xml = !args[1].StartsWith("j", StringComparison.OrdinalIgnoreCase);
+                MessageBox.Show("Password not set. Use 'Open Password' command to set password.");
             }
             else
             {
-                if (!string.IsNullOrWhiteSpace(text))
+                if (args.Length > 1)
                 {
-                    string check = text.TrimStart();
-                    if (check.Length > 0 && check[0] == '<')
+                    string name = args[1];
+                    PasswordsModel data = Passwordfile.ReadFile();
+                    if (data != null)
                     {
-                        xml = true;
+                        if (data.Passwords != null)
+                        {
+                            string password = data.Passwords.Where(o => o.Name.ToLower() == name.ToLower()).Select(o => o.Password).FirstOrDefault();
+                            if (string.IsNullOrWhiteSpace(password))
+                            {
+                                MessageBox.Show("Password not found.");
+                            }
+                            else
+                            {
+                                Clipboard.SetText(password, TextDataFormat.Text);
+                            }
+                        }
                     }
                     else
                     {
-                        xml = false;
+                        MessageBox.Show("Password not set. Use 'Open Password' command to set password.");
                     }
                 }
             }
-
-
             return true; // hide command window
         }
-
-
- 
     }
 
 }

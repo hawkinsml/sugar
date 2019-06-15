@@ -8,47 +8,25 @@ using Sugar.Helpers;
 
 namespace Sugar.Components.Commands
 {
-    class Base64 : ICommand
+    class Base64 : BaseCommand
     {
+        public Base64()
+        {
+            Name = "Base64";
+            ParamList = new string[] { "Encode | Decode" };
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+            Help = "<h3>Base64</h3>" +
+                    "<p>Encode or Decode a base64 string</p>";
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new Base64());
         }
 
-        public string Name
-        {
-            get { return "Base64"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return new string[] { "Encode | Decode" }; }
-        }
-
-        public string Help
-        {
-            get
-            {
-                return "<h3>Base64</h3>" +
-                    "<p>Encode or Decode a base64 string</p>";
-            }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
             bool decode = false;

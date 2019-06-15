@@ -11,7 +11,7 @@ using Sugar.Components.Settings;
 
 namespace Sugar.Components.Commands
 {
-    class ScriptCmd : ICommand
+    class ScriptCmd : BaseCommand
     {
         static public void Init(ICommandManager commandManager)
         {
@@ -32,39 +32,15 @@ namespace Sugar.Components.Commands
         public ScriptCmd(CommandModel cmd)
         {
             this.Cmd = cmd;
+            Name = Cmd.Name;
+            ParamList = Cmd.ParamList;
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+            Help = Cmd.Help;
         }
 
-        public string Name
-        {
-            get { return Cmd.Name; }
-        }
-
-        public string[] ParamList
-        {
-            get { return Cmd.ParamList; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get { return Cmd.Help; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             bool retVal = true;
             try

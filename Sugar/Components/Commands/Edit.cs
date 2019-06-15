@@ -11,44 +11,24 @@ using Sugar.Helpers;
 
 namespace Sugar.Components.Commands
 {
-    class Edit : ICommand
+    class Edit : BaseCommand
     {
+        public Edit()
+        {
+            Name = "Edit";
+            ParamList = null;
+            Help = "<h3>Edit</h3><p>Saves the contents of the clipboard as a temp file (.bmp for images and .txt for text) and opens the file with the defualt editor for the content type.</p>";
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new Edit());
         }
 
-        public string Name
-        {
-            get { return "Edit"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get { return "<h3>Edit</h3><p>Saves the contents of the clipboard as a temp file (.bmp for images and .txt for text) and opens the file with the defualt editor for the content type.</p>"; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             if (Clipboard.ContainsImage())
             {

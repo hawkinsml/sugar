@@ -8,44 +8,24 @@ using Sugar.Helpers;
 
 namespace Sugar.Components.Commands
 {
-    public class AddCommas : ICommand
+    public class AddCommas : BaseCommand
     {
+        public AddCommas()
+        {
+            Name = "Commas";
+            ParamList = null;
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+            Help = "<h3>Commas</h3><p>Replace line feed and carriage return with a comma.</p>";
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new AddCommas());
         }
 
-        public string Name
-        {
-            get { return "Commas"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get { return "<h3>Commas</h3><p>Replace line feed and carriage return with a comma.</p>"; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
             if (!string.IsNullOrWhiteSpace(text))

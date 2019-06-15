@@ -8,44 +8,24 @@ using Sugar.Helpers;
 
 namespace Sugar.Components.Commands
 {
-    class T4 : ICommand
+    class T4 : BaseCommand
     {
+        public T4()
+        {
+            Name = "T4";
+            ParamList = null;
+            Help = null;
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = "Build json to define object for T4 templates that build code first.";
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new T4());
         }
 
-        public string Name
-        {
-            get { return "T4"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get { return null; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return "Build json to define object for T4 templates that build code first."; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
 

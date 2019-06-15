@@ -10,44 +10,24 @@ using Sugar.Helpers;
 
 namespace Sugar.Components.Commands
 {
-    class Save : ICommand
+    class Save : BaseCommand
     {
+        public Save()
+        {
+            Name = "Save";
+            ParamList = new string[] { "File Name" };
+            ParamDescriptionList = new string[] { "File name to use when creating Excel file. If file name is not provide, a temp file name will be created." };
+            ParamRequired = new bool[] { false };
+            Description = "Saves the contents of the clipboard to a file";
+            Help = null;
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new Save());
         }
 
-        public string Name
-        {
-            get { return "Save"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return new string[] { "File Name" }; } 
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return new string[] { "File name to use when creating Excel file. If file name is not provide, a temp file name will be created." }; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return new bool[] {false}; }
-        }
-
-        public string Description
-        {
-            get { return "Saves the contents of the clipboard to a file"; }
-        }
-
-        public string Help
-        {
-            get { return null; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             string fileName = DateTime.Now.ToString("yyyy-MM-dd_HHmmss");
             if (args.Length > 1 && !string.IsNullOrWhiteSpace(args[1]))

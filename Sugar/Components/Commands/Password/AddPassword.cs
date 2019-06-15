@@ -12,95 +12,77 @@ using System.IO;
 
 namespace Sugar.Components.Commands
 {
-    class AddPassword : ICommand
+    class AddPassword : BaseCommand
     {
         private String SharedSecret { get; set; }
+
+        public AddPassword()
+        {
+            Name = "Add Password";
+            ParamList = new string[] { "name", "url", "email", "user name", "password" };
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+            Help = "<h3>Add Password</h3>" +
+                    "<p>Add new account for pw command.</p>" +
+                     "<dl>" +
+                    "<dt>name <span class='label label-default'>required</span></dt>" +
+                    "<dd></dd>" +
+                    "<dt>password <span class='label label-default'>required</span></dt>" +
+                    "<dd></dd>" +
+                    "<dt>user name <span class='label label-default'>option</span></dt>" +
+                    "<dd></dd>" +
+                    "<dt>url <span class='label label-default'>option</span></dt>" +
+                    "<dd></dd>" +
+                    "<dt>email <span class='label label-default'>option</span></dt>" +
+                    "<dd></dd>" +
+                    "</dl>";
+        }
 
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new AddPassword());
         }
 
-        public string Name
+        override public bool Execute(string[] args)
         {
-            get { return "Add Password"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return new string[] { "name", "url", "email", "user name", "password" }; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get
-            {
-                return "<h3>Add Password</h3>" +
-                    "<p>Add new account for pw command.</p>" +
-                     "<dl>" +
-                    "<dt>name <span class='label label-default'>required</span></dt>" +
-                    "<dd></dd>" +
-                    "<dt>url <span class='label label-default'>required</span></dt>" +
-                    "<dd></dd>" +
-                    "<dt>email <span class='label label-default'>required</span></dt>" +
-                    "<dd></dd>" +
-                    "<dt>user name <span class='label label-default'>required</span></dt>" +
-                    "<dd></dd>" +
-                    "<dt>password <span class='label label-default'>required</span></dt>" +
-                    "<dd></dd>" +
-                    "</dl>";
-            }
-        }
-
-        public bool Execute(string[] args)
-        {
-
             if (string.IsNullOrWhiteSpace(Passwordfile.SharedSecret))
             {
                 MessageBox.Show("Password not set. Use 'Open Password' command to set password.");
             }
             else
             {
-                if (args.Length > 5)
+                if (args.Length > 2)
                 {
                     PasswordModel pw = new PasswordModel();
                     pw.Name = args[1];
-                    pw.Url = args[2];
-                    pw.Email = args[3];
-                    pw.UserName = args[4];
-                    pw.Password = args[5];
-
-                    PasswordsModal data = Passwordfile.ReadFile();
-                    if ( data != null )
+                    pw.Password = args[2];
+                    if (args.Length > 3)
                     {
-                        if ( data.Passwords != null )
+                        pw.UserName = args[3];
+                        if (args.Length > 4)
                         {
-                            data.Passwords.Add(pw);
+                            pw.Url = args[4];
+                            if (args.Length > 5)
+                            {
+                                pw.Email = args[5];
+                            }
                         }
-                        Passwordfile.SaveFile(data);
                     }
+
+                    PasswordsModel data = Passwordfile.ReadFile();
+                    if (data == null)
+                    {
+                        data = new PasswordsModel();
+                    }
+                    if ( data.Passwords != null )
+                    {
+                        data.Passwords.Add(pw);
+                    }
+                    Passwordfile.SaveFile(data);
                 }
             }
             return true; // hide command window
         }
-
-
- 
     }
-
 }

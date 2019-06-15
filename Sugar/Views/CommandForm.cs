@@ -25,6 +25,8 @@ namespace Sugar
         ClipboardViewForm clipboardPreview = new ClipboardViewForm();
         CommandManager cmdHandler = new CommandManager();
         CommandManager commandManager = new CommandManager();
+        Hotkey hotKey = null;
+        Hotkey superHotKey = null;
 
         CommandHistoryModel history = new CommandHistoryModel();
         private int historyIndex = 0;
@@ -32,13 +34,12 @@ namespace Sugar
         List<ICommand> suggestedList = null;
         int suggestIndex = 0;
 
-        // The path to the key where Windows looks for startup applications
-        RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
         bool autoHide = true;
         string autoCommand = "";
         string suggestedCommand = "";
 
+        #region Interop
         [DllImport("User32.dll")]
         public static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
 
@@ -50,6 +51,7 @@ namespace Sugar
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool LockWorkStation();
+        #endregion
 
         private bool settingClipboardViewer = true;
         private IntPtr _nextClipboardViewer;		// The next clipboard in the Windows clipboard chain
@@ -63,10 +65,30 @@ namespace Sugar
                 }
         }
 
+        public CommandForm()
+        {
+            InitializeComponent();
+            SetForStartUp();
+            InitHotKey();
+
+            commandManager.InitCommands();
+            history = commandManager.LoadCommandHistory();
+            historyIndex = history.CommandHistory.Count;
+
+            EventManager.Instance.HideEvent += Instance_hideEvent;
+            EventManager.Instance.ShowEvent += Instance_ShowEvent;
+            EventManager.Instance.MoveEvent += Instance_MoveEvent;
+            EventManager.Instance.SettingsChangedEvent += Instance_SettingsChangedEvent;
+            notifyIcon.Text = Application.ProductName + " - MLH Software";
+            //this.BackColor = Color.White;
+            //this.TransparencyKey = Color.White;
+        }
 
         private void SetForStartUp()
         {
-            bool set = false;
+            // The path to the key where Windows looks for startup applications
+            RegistryKey rkApp = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
             // Check to see the current state (running at startup or not)
             if (rkApp.GetValue(Application.ProductName) == null)
             {
@@ -75,6 +97,46 @@ namespace Sugar
             }
         }
     
+        private bool InitHotKey()
+        {
+            bool retVal = false;
+            hotKey = new Hotkey(Keys.Space, false, false, true, false);
+            if (hotKey.Register())
+            {
+                hotKey.Pressed += HotKey_Pressed;
+                retVal = true;
+            }
+
+            superHotKey = new Hotkey(Keys.Space, false, false, true, true);
+            if (superHotKey.Register())
+            {
+                superHotKey.Pressed += SuperHotKey_Pressed;
+                retVal = true;
+            }
+
+            return retVal;
+        }
+
+        private void SuperHotKey_Pressed(object sender, HandledEventArgs e)
+        {
+            autoCommand = "notepad";
+            if (!string.IsNullOrWhiteSpace(autoCommand))
+            {
+                // Use SendKeys to Paste
+                //SendKeys.Send("^C");
+
+                CommandText = autoCommand;
+                ProcessCommand();
+
+                // Use SendKeys to Paste
+               // SendKeys.Send("^V");
+            }
+        }
+
+        private void HotKey_Pressed(object sender, HandledEventArgs e)
+        {
+            ShowCommandWindow();
+        }
 
         /// <summary>
         /// Handles the clipboard calls from the operating system and forwards them
@@ -131,24 +193,6 @@ namespace Sugar
             System.Reflection.MethodInfo misSetStyle = typeTB.GetMethod("SetStyle", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             if (misSetStyle != null && c != null) { misSetStyle.Invoke(c, new object[] { Style, value }); retval = true; }
             return retval;
-        }
-
-        public CommandForm()
-        {
-            InitializeComponent();
-            SetForStartUp();
-
-            commandManager.InitCommands();
-            history = commandManager.LoadCommandHistory();
-            historyIndex = history.CommandHistory.Count;
-
-            EventManager.Instance.HideEvent += Instance_hideEvent;
-            EventManager.Instance.ShowEvent += Instance_ShowEvent;
-            EventManager.Instance.MoveEvent += Instance_MoveEvent;
-            EventManager.Instance.SettingsChangedEvent += Instance_SettingsChangedEvent;
-            notifyIcon.Text = Application.ProductName + " - MLH Software";
-            //this.BackColor = Color.White;
-            //this.TransparencyKey = Color.White;
         }
 
         void Instance_SettingsChangedEvent(object sender, EventArgs e)
@@ -214,18 +258,16 @@ namespace Sugar
             this.Visible = false;
             this.WindowState = FormWindowState.Normal;
 
-            HotKeysManager.Instance.SetHotKeys(this);
             // Sign up for clipboard change notifications from the operating system.
             _nextClipboardViewer = SetClipboardViewer(Handle);
             settingClipboardViewer = false;
-            
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Remove ourselves from OS clipboard notifications
             ChangeClipboardChain(Handle, _nextClipboardViewer);
-            HotKeysManager.Instance.ReleaseHotKeys();
+            hotKey.Unregister();
         }
 
         private void ShowBalloonTip(string text)
@@ -244,27 +286,6 @@ namespace Sugar
             //this.notifyIcon.Icon = new Icon("icon.ico");
             this.notifyIcon.Visible = true;
             this.notifyIcon.ShowBalloonTip(3);
-        }
-
-
-        internal void HotKeyPressed()
-        {
-            ShowCommandWindow();
-        }
-
-        internal void AutoHotKeyPressed()
-        {
-            if (!string.IsNullOrWhiteSpace(autoCommand))
-            {
-                // Use SendKeys to Paste
-                //SendKeys.Send("^C");
-
-                CommandText = autoCommand;
-                ProcessCommand();
-
-                // Use SendKeys to Paste
-                SendKeys.Send("^V");
-            }
         }
 
         private void notifyIcon_DoubleClick(object sender, EventArgs e)
@@ -353,7 +374,7 @@ namespace Sugar
                     }
                     break;
                 }
-                case Keys.PageDown:
+             /*   case Keys.PageDown:
                 {
                     //webForm.Show();
                     clipboardPreview.ShowForm();
@@ -364,7 +385,7 @@ namespace Sugar
                     //webForm.Hide();
                     clipboardPreview.Hide();
                     break;
-                }
+                }*/
                 case Keys.Escape:
                 {
                     HideCommandWindow();
@@ -383,7 +404,7 @@ namespace Sugar
                     CommandText = "";
                     break;
                 }
-                case Keys.Home:
+                case Keys.PageUp:
                 {
                     if (calledFrom == 1)
                     {
@@ -398,7 +419,7 @@ namespace Sugar
                     }
                     break;
                 }
-                case Keys.End:
+                case Keys.PageDown:
                 {
                     if (calledFrom == 1)
                     {

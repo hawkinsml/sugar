@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Sugar.Components.Commands
 { 
-    class PasswordsModal
+    class PasswordsModel
     {
-        public PasswordsModal()
+        public PasswordsModel()
         {
             Passwords = new List<PasswordModel>();
         }

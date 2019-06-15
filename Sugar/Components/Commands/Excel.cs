@@ -13,44 +13,27 @@ using Sugar.Helpers;
 
 namespace Sugar.Components.Commands
 {
-    class Excel : ICommand
+    class Excel : BaseCommand
     {
+        public Excel()
+        {
+            Name = "Excel";
+            ParamList = new string[] { "File Name", "Password" };
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+            Help = "<h3>Excel</h3><p>Creates an Excel file with the contents of the clipboard. Has two params.</p>" + 
+                    "<dl><dt>File Name <span class='label label-default'>optional</span></dt>" +
+                    "<dd>File name to use when creating Excel file. If file name is not provide, a temp file name will be created.</dd>" + 
+                    "<dt>Password <span class='label label-default'>optional</span></dt>  <dd>Encrypt file using this password.</dd></dl>";
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new Excel());
         }
 
-        public string Name
-        {
-            get { return "Excel"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return new string[] { "File Name", "Password" }; } 
-        }
-
-        public string Help
-        {
-            get { return "<h3>Excel</h3><p>Creates an Excel file with the contents of the clipboard. Has two params.</p><dl><dt>File Name <span class='label label-default'>optional</span></dt><dd>File name to use when creating Excel file. If file name is not provide, a temp file name will be created.</dd><dt>Password <span class='label label-default'>optional</span></dt>  <dd>Encrypt file using this password.</dd></dl>"; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
             string password = "";

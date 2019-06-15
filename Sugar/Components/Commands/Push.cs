@@ -11,8 +11,18 @@ using Sugar.Helpers;
 
 namespace Sugar.Components.Commands
 {
-    class Push : ICommand
+    class Push : BaseCommand
     {
+        public Push()
+        {
+            Name = "Push";
+            ParamList = null;
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = null;
+            Help = "<h3>Push</h3><p>Push the contents of the clipboard onto a stack. Use Pop command to put item at the top of the stack back onto clipboard</p>";
+        }
+
         private Stack<string> textStack = new Stack<string>();
 
         static public void Init(ICommandManager commandManager)
@@ -20,37 +30,7 @@ namespace Sugar.Components.Commands
             commandManager.AddCommandHandler(new Push());
         }
 
-        public string Name
-        {
-            get { return "Push"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return null; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get { return "<h3>Push</h3><p>Push the contents of the clipboard onto a stack. Use Pop command to put item at the top of the stack back onto clipboard</p>"; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
             bool push = true;

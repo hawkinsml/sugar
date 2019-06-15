@@ -8,44 +8,24 @@ using Sugar.Helpers;
 
 namespace Sugar.Components.Commands
 {
-    public class MakeUpper : ICommand
+    public class MakeUpper : BaseCommand
     {
+        public MakeUpper()
+        {
+            Name = "Upper";
+            ParamList = null;
+            Help = null;
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = "Converts the contents of the clipboard to all uppercase.";
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new MakeUpper());
         }
 
-        public string Name
-        {
-            get { return "Upper"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get { return null; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return "Converts the contents of the clipboard to all uppercase."; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
             if ( !string.IsNullOrWhiteSpace( text ) )
@@ -56,44 +36,24 @@ namespace Sugar.Components.Commands
         }
     }
 
-    public class MakeLower : ICommand
+    public class MakeLower : BaseCommand
     {
+        public MakeLower()
+        {
+            Name = "Lower";
+            Help = null;
+            ParamList = null;
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = "Converts the contents of the clipboard to all lowercase.";
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new MakeLower());
         }
 
-        public string Name
-        {
-            get { return "Lower"; }
-        }
-
-        public string Help
-        {
-            get { return null; }
-        }
-
-        public string[] ParamList
-        {
-            get { return null; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return "Converts the contents of the clipboard to all lowercase."; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
             if (!string.IsNullOrWhiteSpace(text))
@@ -104,44 +64,24 @@ namespace Sugar.Components.Commands
         }
     }
 
-    public class Trim : ICommand
+    public class Trim : BaseCommand
     {
+        public Trim ()
+        {
+            Name = "Trim";
+            ParamList = null;
+            Help = null;
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = "Trims spaces from the begining and ending of each line on the clipboard.";
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new Trim());
         }
 
-        public string Name
-        {
-            get { return "Trim"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get { return null; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return "Trims spaces from the begining and ending of each line on the clipboard."; }
-        }
-
-        public bool Execute(string[] args)
+        override public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
             if (!string.IsNullOrWhiteSpace(text))
@@ -162,44 +102,24 @@ namespace Sugar.Components.Commands
     }
 
 
-    public class Strip : ICommand
+    public class Strip : BaseCommand
     {
+        public Strip()
+        {
+            Name = "Strip";
+            ParamList = null;
+            Help = null;
+            ParamDescriptionList = null;
+            ParamRequired = null;
+            Description = "Rempove carriage returns from text.";
+        }
+
         static public void Init(ICommandManager commandManager)
         {
             commandManager.AddCommandHandler(new Strip());
         }
 
-        public string Name
-        {
-            get { return "Strip"; }
-        }
-
-        public string[] ParamList
-        {
-            get { return null; }
-        }
-
-        public string Help
-        {
-            get { return null; }
-        }
-
-        public string[] ParamDescriptionList
-        {
-            get { return null; }
-        }
-
-        public bool[] ParamRequired
-        {
-            get { return null; }
-        }
-
-        public string Description
-        {
-            get { return "Rempove carriage returns from text."; }
-        }
-
-        public bool Execute(string[] args)
+         override public bool Execute(string[] args)
         {
             string text = Clipboard.GetText();
             if (!string.IsNullOrWhiteSpace(text))
