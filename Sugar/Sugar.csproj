@@ -112,6 +112,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\Commands\Url.cs" />
     <Compile Include="Components\Commands\BaseCommand.cs" />
     <Compile Include="Components\Commands\Guid.cs" />
     <Compile Include="Components\Commands\Clear.cs" />
